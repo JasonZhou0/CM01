@@ -1,0 +1,20 @@
+{
+    "files.autoGuessEncoding": true,
+    "editor.tabSize": 3,
+    "files.encoding": "gb2312",
+    "python.pythonPath": "D:\\Python\\Python37-32\\python.exe",
+    "files.associations": {
+        "stdio.h": "c",
+        "windows.h": "c",
+        "python.h": "c",
+        "checkaccount.h": "c",
+        "array": "c",
+        "*.tcc": "c",
+        "future": "c",
+        "istream": "c",
+        "functional": "c",
+        "tuple": "c",
+        "utility": "c",
+        "display.h": "c"
+    },
+}
