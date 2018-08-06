@@ -4,12 +4,10 @@
  * Jason.zhou	2018-08-06
  */
 
-Reset_Handler = 0x08000000;
-
 /* Program Entry, set to mark it as "used" and avoid gc */
 MEMORY
 {
-    CODE (rx) : ORIGIN = Reset_Handler, LENGTH = 1024k /* 1024KB flash */
+    CODE (rx) : ORIGIN = 0x08000000, LENGTH = 1024k /* 1024KB flash */
     DATA (rw) : ORIGIN = 0x20000000, LENGTH =  128k /* 128K sram */
 }
 
