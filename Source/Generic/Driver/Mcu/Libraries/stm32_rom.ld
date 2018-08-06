@@ -1,6 +1,7 @@
 /*
  * linker script for STM32F10x with GNU ld
  * bernard.xiong 2009-10-14
+ * Jason.zhou	2018-08-06
  */
 
 /* Program Entry, set to mark it as "used" and avoid gc */
@@ -10,7 +11,7 @@ MEMORY
     DATA (rw) : ORIGIN = 0x20000000, LENGTH =  128k /* 128K sram */
 }
 ENTRY(Reset_Handler)
-_system_stack_size = 0x200;
+_system_stack_size = 0x400;
 
 SECTIONS
 {

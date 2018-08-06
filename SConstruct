@@ -13,7 +13,7 @@ if os.path.exists('Build'):
 
 
 env = Environment(ENV = os.environ)
- 
+
 env['AR'] = 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-ar'
 env['AS'] = 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-as'
 env['CC'] = 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-gcc'
@@ -37,7 +37,7 @@ env['CPPPATH'] = [
 env.Append(CCFLAGS = [
     '-mcpu=cortex-m4',
     '-mthumb',
-    '-O2',
+    '-O1',
     '-fsigned-char',
     '-ffunction-sections',
     '-fdata-sections',
@@ -75,16 +75,10 @@ def FindSConscriptPath(dir_name):
 		#for filename in filenames:
 			if ("SConscript" in filenames):
 				SConscript_path_file = os.path.join(dirpath,"SConscript")
-				print(SConscript_path_file)
 				Scon_Object += SConscript([SConscript_path_file])
-				print(Scon_Object)
-				#break
 	return Scon_Object
 
 Object = FindSConscriptPath(os.getcwd()+'\\Source')
-
-
-
 
 # build everything
 TARGETNAME = 'Build\\bin\\TestCode'
