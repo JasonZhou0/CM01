@@ -37,6 +37,7 @@ env['CPPPATH'] = [
 env.Append(CCFLAGS = [
     '-mcpu=cortex-m4',
     '-mthumb',
+    '-c',
     '-O1',
     '-fsigned-char',
     '-ffunction-sections',
@@ -50,7 +51,7 @@ env.Append(CCFLAGS = [
 env.Append(LINKFLAGS = [
     '-ffunction-sections',
     '-fdata-sections',
-    '-TSource\\Generic\\Driver\\Mcu\\Libraries\\stm32_rom.ld',
+    '-TTools\\LinkerFile\\stm32_rom.ld',
     '-Xlinker',
     '--gc-sections',
     '--specs=nano.specs',
