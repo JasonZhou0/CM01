@@ -81,35 +81,46 @@ def FindSConscriptPath(dir_name):
 
 Object = FindSConscriptPath(os.getcwd()+'\\Source')
 
+MapEnv=env.Clone
+
 # build everything
 TARGETNAME = 'Build\\bin\\TestCode'
 FILELIST = Object #Glob('*.cpp')
 prg = env.Program(
     target = TARGETNAME,
-    source = FILELIST
+    source = FILELIST,
 )
 
-# binary file builder -O ihex
-if BUILD_OUT_PUT_FILE == bin:
-    def arm_generator(source, target, env, for_signature):
-        return '$OBJCOPY -O binary %s %s'%(source[0], target[0])
-    env.Append(BUILDERS = {
-        'Objcopy': Builder(
-            generator=arm_generator,
-            suffix='.bin',
-            src_suffix='.elf'
-        )
-    })
-elif BUILD_OUT_PUT_FILE == hex:
-    def arm_generator(source, target, env, for_signature):
-        return '$OBJCOPY -O ihex %s %s'%(source[0], target[0])
-    env.Append(BUILDERS = {
-        'Objcopy': Builder(
-            generator=arm_generator,
-            suffix='.hex',
-            src_suffix='.elf'
-        )
-    })
 
-env.Objcopy(prg)
+
+# binary file builder -O ihex
+
+def arm_generator_bin(source, target, env, for_signature):
+    return '$OBJCOPY -O binary %s %s'%(source[0], target[0])
+def arm_generator_hex(source, target, env, for_signature):
+    return '$OBJCOPY -O ihex %s %s'%(source[0], target[0])
+def arm_generator_map(source, target, env, for_signature):
+    return '$OBJCOPY -O ihex %s %s'%(source[0], target[0])
+env.Append(BUILDERS = {
+    'Objcopy_bin': Builder(
+        generator=arm_generator_bin,
+        suffix='.bin',
+        src_suffix='.elf'
+    ),
+    'Objcopy_hex': Builder(
+        generator=arm_generator_hex,
+        suffix='.hex',
+        src_suffix='.elf'
+    ),
+    'Objcopy_map': Builder(
+        generator=arm_generator_map,
+        suffix='.hex2',
+        src_suffix='.elf'
+    )
+})
+
+
+env.Objcopy_bin(prg)
+env.Objcopy_hex(prg)
+env.Objcopy_map(prg)
 
