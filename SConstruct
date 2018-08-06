@@ -1,6 +1,17 @@
 # gnu arm toolchain must be already in system path
- 
+
 import os
+import shutil
+
+#define out put file .bin or .hex
+BUILD_OUT_PUT_FILE = hex
+
+
+# delete folder "Build"
+if os.path.exists('Build'):
+	shutil.rmtree('Build')
+
+
 env = Environment(ENV = os.environ)
  
 env['AR'] = 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-ar'
@@ -11,7 +22,8 @@ env['LINK'] = 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-g++'                
 env['RANLIB'] = 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-ranlib'
 env['OBJCOPY'] = 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-objcopy'
 env['PROGSUFFIX'] = '.elf'
- 
+env['WorkSpace'] = os.getcwd()
+
 # include locations
 env['CPPPATH'] = [
     '#Inc',
@@ -38,7 +50,7 @@ env.Append(CCFLAGS = [
 env.Append(LINKFLAGS = [
     '-ffunction-sections',
     '-fdata-sections',
-    '-TTrueSTUDIO/Discovery001 Configuration/STM32F407VG_FLASH.ld',
+    '-TSource\\Generic\\Driver\\Mcu\\Libraries\\stm32_rom.ld',
     '-Xlinker',
     '--gc-sections',
     '--specs=nano.specs',
@@ -48,41 +60,61 @@ env.Append(LINKFLAGS = [
 env.Append(CPPDEFINES = [
     'STM32F407xx',
 ])
- 
+
+# WorkSpace path
+#env.Append(WorkSpace = [ os.getcwd() ])
+
+# Export Environment
+Export('env')
+
+
+def FindSConscriptPath(dir_name):
+	firt = 0
+	Scon_Object = []
+	for dirpath, dirnames, filenames in os.walk(dir_name):
+		#for filename in filenames:
+			if ("SConscript" in filenames):
+				SConscript_path_file = os.path.join(dirpath,"SConscript")
+				print(SConscript_path_file)
+				Scon_Object += SConscript([SConscript_path_file])
+				print(Scon_Object)
+				#break
+	return Scon_Object
+
+Object = FindSConscriptPath(os.getcwd()+'\\Source')
+
+
+
+
 # build everything
+TARGETNAME = 'Build\\bin\\TestCode'
+FILELIST = Object #Glob('*.cpp')
 prg = env.Program(
-    target = 'main',
-    source = [
-        'Src/main.c',
-        'Src/stm32f4xx_hal_msp.c',
-        'Src/stm32f4xx_it.c',
-        'Src/sys/startup_stm32f4xx_fromCoocox.c',
-        'Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c',
-        'Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c',
-    ]
+    target = TARGETNAME,
+    source = FILELIST
 )
- 
-# binary file builder
-def arm_generator(source, target, env, for_signature):
-    return '$OBJCOPY -O binary %s %s'%(source[0], target[0])
-env.Append(BUILDERS = {
-    'Objcopy': Builder(
-        generator=arm_generator,
-        suffix='.bin',
-        src_suffix='.elf'
-    )
-})
- 
+
+# binary file builder -O ihex
+if BUILD_OUT_PUT_FILE == bin:
+    def arm_generator(source, target, env, for_signature):
+        return '$OBJCOPY -O binary %s %s'%(source[0], target[0])
+    env.Append(BUILDERS = {
+        'Objcopy': Builder(
+            generator=arm_generator,
+            suffix='.bin',
+            src_suffix='.elf'
+        )
+    })
+elif BUILD_OUT_PUT_FILE == hex:
+    def arm_generator(source, target, env, for_signature):
+        return '$OBJCOPY -O ihex %s %s'%(source[0], target[0])
+    env.Append(BUILDERS = {
+        'Objcopy': Builder(
+            generator=arm_generator,
+            suffix='.hex',
+            src_suffix='.elf'
+        )
+    })
+
 env.Objcopy(prg)
+

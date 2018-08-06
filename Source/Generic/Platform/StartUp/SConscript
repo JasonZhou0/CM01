@@ -1,9 +1,16 @@
 Import('env')
 import os
 
+print('start build Sconscript!!!!!!!!')
 WorkSpacePath = env['WorkSpace']
+print('start build Sconscript!!!!!!!!WorkSpacePath = ',WorkSpacePath)
+
 length = len(WorkSpacePath)
+print('start build Sconscript!!!!!!!!length = ',length)
+
 SourcePath = os.getcwd()[length:]
+print('start build Sconscript!!!!!!!!SourcePath = ',SourcePath)
+
 objects = env.Object(target = [WorkSpacePath+'/Build/obj'+SourcePath+'/main'] , source = ['main.c'], CPPPATH = Split(WorkSpacePath+'/Source/'))
 pass
 print('Compile',objects)
