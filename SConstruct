@@ -27,44 +27,53 @@ env['WorkSpace'] = os.getcwd()
 
 # include locations
 env['CPPPATH'] = [
-    '#Inc',
-    '#Drivers/CMSIS/Include',
-    '#Drivers/CMSIS/Device/ST/STM32F4xx/Include',
-    '#Drivers/STM32F4xx_HAL_Driver/Inc',
-    '#Drivers/STM32F4xx_HAL_Driver/Inc/Legacy',
-	'#Tools\\gcc-arm-none-eabi\\arm-none-eabi\\lib\\',
+    '#Source\\Generic\\Driver\\Mcu\\Libraries\\CMSIS\\Include',
+    '#Source\\Generic\\Driver\\Mcu\\Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Include',
+    '#Source\\Generic\\Driver\\Mcu\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc',
     ]
 
 # lib files
 env.Append(LIBPATH = [
 	'Tools\\gcc-arm-none-eabi\\arm-none-eabi\\lib\\',
-	'Tools\\gcc-arm-none-eabi\\lib\gcc\\arm-none-eabi\\5.4.1'
+	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1',
+	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv6-m',
+	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7e-m',
+	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7-m',
+	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.base',
+	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main',
+	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main\\fpu\\fpv5-d16',
 	])
 	
 # compiler flags
 env.Append(CCFLAGS = [
     '-mcpu=cortex-m4',
-    '-mthumb',
+    # '-mthumb-interwork',
 	'-Wfatal-errors',
 	'-Wall',
 	'-Wextra',
-    '-c',
-	'-g',
-    '-O1',
+	'-g3',
+	# '-M',
+	'-C',
+    '-O0',
     '-fsigned-char',
     '-ffunction-sections',
     '-fdata-sections',
+    '-mthumb',
     '-std=gnu11',
     '-fmessage-length=0',
-    '-mthumb-interwork',
+	# '-c',
     ])
  
 # linker flags
 env.Append(LINKFLAGS = [
 	'-TTools\\LinkerFile\\stm32_rom.ld',
-    '-ffunction-sections',
-    '-fdata-sections',
+    # '-ffunction-sections',
+    # '-fdata-sections',
     '-Xlinker',
+	'-Map',
+	'-Xlinker',
+	'Build\\bin\\TestCode-ld.map',
+	'-Xlinker',
     '--gc-sections',
     '--specs=nano.specs',
     ]) 
@@ -72,6 +81,9 @@ env.Append(LINKFLAGS = [
 # defines
 env.Append(CPPDEFINES = [
     'STM32F407xx',
+	'__GNUC__',
+	'__FPU_PRESENT=1',
+	'__FPU_USED=1',
 ])
 
 # Export Environment
@@ -98,24 +110,21 @@ prg = env.Program(
     source = FILELIST,
 )
 
-MapEnv = env.Clone(LINKFLAGS = [
-	'-TTools\\LinkerFile\\stm32_rom.ld',
-	'-Map=Build\\bin\\TestCode-ld.map',
-	],
-	PROGSUFFIX = [
-	'.elf'
-	],
-	CXX = [
-	'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-ld',
-	],
-	LINK =[
-	'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-ld',
-	],)
+# MapEnv = env.Clone(LINKFLAGS = [
+	# '-TTools\\LinkerFile\\stm32_rom.ld',
+	# '-Map=Build\\bin\\TestCode-ld.map',
+	# ],
+	# PROGSUFFIX = [
+	# '.elf'
+	# ],
+	# LINK =[
+	# 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-ld',
+	# ],)
 	
-MapEnv.Program(
-    target = 'Build\\bin\\TestCode-ld',
-    source = FILELIST,
-	)
+# MapEnv.Program(
+    # target = 'Build\\bin\\TestCode-ld',
+    # source = FILELIST,
+	# )
 
 # binary file builder -O ihex
 def arm_generator_bin(source, target, env, for_signature):
