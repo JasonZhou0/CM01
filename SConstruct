@@ -96,7 +96,7 @@ env.Append(CCFLAGS = [
  
 # linker flags
 env.Append(LINKFLAGS = [
-	'-TConfig\\LinkerFile\\stm32_rom.ld',
+	'-TConfig\\LinkerFile\\STM32F407VETx_FLASH.ld',
     # '-ffunction-sections',
     # '-fdata-sections',
     '-Xlinker',
