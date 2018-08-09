@@ -4,7 +4,5 @@ import os
 WorkSpacePath = env['WorkSpace']
 length = len(WorkSpacePath)
 SourcePath = os.getcwd()[length:]
-objects = env.Object(target = [WorkSpacePath+'/Build/obj'+SourcePath+'/checkaccount'] , source = ['checkaccount.c'], CPPPATH = Split(WorkSpacePath+'/Source/'))
-pass
-print('Compile',objects)
+objects = env.Object(target = [WorkSpacePath+'/Build/obj'+SourcePath+'/checkaccount'] , source = ['checkaccount.c']) # , CPPPATH = Split(WorkSpacePath+'/Source/')
 Return('objects')

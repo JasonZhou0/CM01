@@ -1,23 +1,20 @@
 # gnu arm toolchain must be already in system path
 import os
-
+import Config.BuildConfig.gcc as Compiler
 # import shutil
 # # delete folder "Build" and all files
 # if os.path.exists('Build'):
 	# shutil.rmtree('Build')
 
-
-CompileToolPath   = 'Tools\\gcc-arm-none-eabi\\bin\\'
-
 # Compile path define
-AR                = CompileToolPath+'arm-none-eabi-ar'
-AS                = CompileToolPath+'arm-none-eabi-as'
-CC                = CompileToolPath+'arm-none-eabi-gcc'
-CXX               = CompileToolPath+'arm-none-eabi-g++'
-LINK              = CompileToolPath+'arm-none-eabi-g++'     # predefined is 'arm-none-eabi-gcc'
-RANLIB            = CompileToolPath+'arm-none-eabi-ranlib'
-OBJCOPY           = CompileToolPath+'arm-none-eabi-objcopy'
-PROGSUFFIX        = '.elf'
+AR                = Compiler.AR
+AS                = Compiler.AS
+CC                = Compiler.CC
+CXX               = Compiler.CXX
+LINK              = Compiler.LINK     # predefined is 'arm-none-eabi-gcc'
+RANLIB            = Compiler.RANLIB
+OBJCOPY           = Compiler.OBJCOPY
+PROGSUFFIX        = Compiler.PROGSUFFIX
 
 # Include path
    # public
