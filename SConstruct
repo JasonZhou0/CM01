@@ -71,7 +71,7 @@ env.Append(LIBPATH = [
 	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7-m',
 	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.base',
 	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main\\fpu\\fpv5-d16',
+	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main\\fpu\\fpv4-sp-d16',
 	])
 	
 # compiler flags
@@ -103,6 +103,7 @@ env.Append(LINKFLAGS = [
     '-ffunction-sections',
     '-fdata-sections',
 	'-mfloat-abi=hard',
+	# '-mfloat-abi=soft',
     '-Xlinker',
 	'-Map',
 	'-Xlinker',
