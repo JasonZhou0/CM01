@@ -4,5 +4,5 @@ import os
 WorkSpacePath = env['WorkSpace']
 length = len(WorkSpacePath)
 SourcePath = os.getcwd()[length:]
-objects = env.Object(target = [WorkSpacePath+'/Build/obj'+SourcePath+'/display'] , source = ['display.c']) # , CPPPATH = Split(WorkSpacePath+'/Source/')
+objects = env.Object(target = [WorkSpacePath+'/Build/obj'+SourcePath+'/display'] , source = ['display.c'] , CPPPATH = Split(WorkSpacePath+'/Source/')) #
 Return('objects')
