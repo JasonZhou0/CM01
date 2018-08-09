@@ -77,10 +77,13 @@ env.Append(LIBPATH = [
 # compiler flags
 env.Append(CCFLAGS = [
     '-mcpu=cortex-m4',
-    # '-mthumb-interwork',
+    '-mthumb',
+	# '-interwork',
 	'-Wfatal-errors',
 	'-Wall',
 	'-Wextra',
+	# '-mfloat-abi=hard',
+	# '-mfpu=fpv4-sp-d16',
 	'-g3',
 	# '-M',
 	'-C',
@@ -88,17 +91,18 @@ env.Append(CCFLAGS = [
     '-fsigned-char',
     '-ffunction-sections',
     '-fdata-sections',
-    '-mthumb',
     '-std=gnu11',
     '-fmessage-length=0',
-	# '-c',
     ])
  
 # linker flags
 env.Append(LINKFLAGS = [
+	'-mcpu=cortex-m4',
+	'-mthumb',
 	'-TConfig\\LinkerFile\\STM32F407VETx_FLASH.ld',
-    # '-ffunction-sections',
-    # '-fdata-sections',
+    '-ffunction-sections',
+    '-fdata-sections',
+	'-mfloat-abi=hard',
     '-Xlinker',
 	'-Map',
 	'-Xlinker',
