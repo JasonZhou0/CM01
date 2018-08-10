@@ -38,16 +38,16 @@ APP_env['LINKFLAGS']    += Compiler.APP_LINKFLAGS
 
 # work space path
 BOOT_env['WorkSpace']   = os.getcwd()
-BOOT_env['TargetPath']  = Compiler.BOOT_TargetPath
-BOOT_env['OutPath']     = Compiler.BOOT_OutPath
-BOOT_env['OutName']     = Compiler.BOOT_OutName
-BOOT_env['Out']         = Compiler.BOOT_Out
+BOOT_env['TargetPath']  = BOOT_env['WorkSpace']+'\\'+Compiler.BOOT_TargetPath
+BOOT_env['OutPath']     = BOOT_env['WorkSpace']+'\\'+Compiler.BOOT_OutPath
+BOOT_env['OutName']     = BOOT_env['WorkSpace']+'\\'+Compiler.BOOT_OutName
+BOOT_env['Out']         = BOOT_env['WorkSpace']+'\\'+Compiler.BOOT_Out
 
 APP_env['WorkSpace']    = os.getcwd()
-APP_env['TargetPath']   = Compiler.APP_TargetPath
-APP_env['OutPath']      = Compiler.APP_OutPath
-APP_env['OutName']      = Compiler.APP_OutName
-APP_env['Out']          = Compiler.APP_Out
+APP_env['TargetPath']   = APP_env['WorkSpace']+'\\'+Compiler.APP_TargetPath
+APP_env['OutPath']      = APP_env['WorkSpace']+'\\'+Compiler.APP_OutPath
+APP_env['OutName']      = APP_env['WorkSpace']+'\\'+Compiler.APP_OutName
+APP_env['Out']          = APP_env['WorkSpace']+'\\'+Compiler.APP_Out
 
 # project defines
 BOOT_env['CPPDEFINES']  = Define.APP_CPPDEFINES
