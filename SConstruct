@@ -1,165 +1,114 @@
-# gnu arm toolchain must be already in system path
 import os
-import Config.BuildConfig.gcc as Compiler
+import Config.BuildConfig.gcc       as Compiler
+import Config.BuildConfig.include   as Include
+import Config.BuildConfig.define    as Define
+import Config.BuildConfig.library   as Lib
+
 # import shutil
 # # delete folder "Build" and all files
 # if os.path.exists('Build'):
 	# shutil.rmtree('Build')
 
-# Compile path define
-AR                = Compiler.AR
-AS                = Compiler.AS
-CC                = Compiler.CC
-CXX               = Compiler.CXX
-LINK              = Compiler.LINK     # predefined is 'arm-none-eabi-gcc'
-RANLIB            = Compiler.RANLIB
-OBJCOPY           = Compiler.OBJCOPY
-PROGSUFFIX        = Compiler.PROGSUFFIX
+# Great Environment
+BOOT_env  = Environment(ENV = os.environ)
+APP_env   = Environment(ENV = os.environ)
 
-# Include path
-   # public
-PublicIncludePath = [
-   '#Source\\Generic\\Driver\\Mcu\\Libraries\\CMSIS\\Include',
-   '#Source\\Generic\\Driver\\Mcu\\Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Include',
-   '#Source\\Generic\\Driver\\Mcu\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc',
-   ]
-   # private
+# Compiler
+BOOT_env['AR']          = Compiler.BOOT_CompileToolPath['AR']
+BOOT_env['AS']          = Compiler.BOOT_CompileToolPath['AS']
+BOOT_env['CC']          = Compiler.BOOT_CompileToolPath['CC']
+BOOT_env['CXX']         = Compiler.BOOT_CompileToolPath['CXX']
+BOOT_env['LINK']        = Compiler.BOOT_CompileToolPath['LINK']
+BOOT_env['RANLIB']      = Compiler.BOOT_CompileToolPath['RANLIB']
+BOOT_env['OBJCOPY']     = Compiler.BOOT_CompileToolPath['OBJCOPY']
+BOOT_env['PROGSUFFIX']  = Compiler.BOOT_CompileToolPath['PROGSUFFIX']
+BOOT_env['CCFLAGS']     += Compiler.BOOT_CCFLAGS
+BOOT_env['LINKFLAGS']   += Compiler.BOOT_LINKFLAGS
 
+APP_env['AR']           = Compiler.APP_CompileToolPath['AR']
+APP_env['AS']           = Compiler.APP_CompileToolPath['AS']
+APP_env['CC']           = Compiler.APP_CompileToolPath['CC']
+APP_env['CXX']          = Compiler.APP_CompileToolPath['CXX']
+APP_env['LINK']         = Compiler.APP_CompileToolPath['LINK']
+APP_env['RANLIB']       = Compiler.APP_CompileToolPath['RANLIB']
+APP_env['OBJCOPY']      = Compiler.APP_CompileToolPath['OBJCOPY']
+APP_env['PROGSUFFIX']   = Compiler.APP_CompileToolPath['PROGSUFFIX']
+APP_env['CCFLAGS']      += Compiler.APP_CCFLAGS
+APP_env['LINKFLAGS']    += Compiler.APP_LINKFLAGS
 
-# End of Include path
+# work space path
+BOOT_env['WorkSpace']   = os.getcwd()
+BOOT_env['TargetPath']  = Compiler.BOOT_TargetPath
+BOOT_env['OutPath']     = Compiler.BOOT_OutPath
+BOOT_env['OutName']     = Compiler.BOOT_OutName
+BOOT_env['Out']         = Compiler.BOOT_Out
 
-# Libraries path
-   # public
-PublicLibPath     = [
-   'Tools\\gcc-arm-none-eabi\\arm-none-eabi\\lib\\',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv6-m',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7e-m',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7-m',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.base',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main\\fpu\\fpv5-d16',
-	]
-   
-   # private
+APP_env['WorkSpace']    = os.getcwd()
+APP_env['TargetPath']   = Compiler.APP_TargetPath
+APP_env['OutPath']      = Compiler.APP_OutPath
+APP_env['OutName']      = Compiler.APP_OutName
+APP_env['Out']          = Compiler.APP_Out
 
-# user define
-WorkSpacePath     = os.getcwd()
+# project defines
+BOOT_env['CPPDEFINES']  = Define.APP_CPPDEFINES
 
+APP_env['CPPDEFINES']   = Define.APP_CPPDEFINES
 
-env = Environment(ENV = os.environ)
+# lib file paths
+BOOT_env['LIBPATH']     = Lib.BOOT_LIBPATH
 
-env['AR']         = AR
-env['AS']         = AS
-env['CC']         = CC
-env['CXX']        = CXX
-env['LINK']       = LINK         # predefined is 'arm-none-eabi-gcc'
-env['RANLIB']     = RANLIB
-env['OBJCOPY']    = OBJCOPY
-env['PROGSUFFIX'] = PROGSUFFIX
-env['WorkSpace']  = WorkSpacePath
-
-# include locations
-env['CPPPATH']    = PublicIncludePath
+APP_env['LIBPATH']      = Lib.APP_LIBPATH
 
 # lib files
-env.Append(LIBPATH = [
-	'Tools\\gcc-arm-none-eabi\\arm-none-eabi\\lib\\',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv6-m',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7e-m',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7-m',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.base',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main',
-	'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main\\fpu\\fpv4-sp-d16',
-	])
-	
-# compiler flags
-env.Append(CCFLAGS = [
-    '-mcpu=cortex-m4',
-    '-mthumb',
-	# '-interwork',
-	'-Wfatal-errors',
-	'-Wall',
-	'-Wextra',
-	# '-mfloat-abi=hard',
-	# '-mfpu=fpv4-sp-d16',
-	'-g3',
-	# '-M',
-	'-C',
-    '-O0',
-    '-fsigned-char',
-    '-ffunction-sections',
-    '-fdata-sections',
-    '-std=gnu11',
-    '-fmessage-length=0',
-    ])
- 
-# linker flags
-env.Append(LINKFLAGS = [
-	'-mcpu=cortex-m4',
-	'-mthumb',
-	'-TConfig\\LinkerFile\\STM32F407VETx_FLASH.ld',
-    '-ffunction-sections',
-    '-fdata-sections',
-	'-mfloat-abi=hard',
-	# '-mfloat-abi=soft',
-    '-Xlinker',
-	'-Map',
-	'-Xlinker',
-	'Build\\bin\\TestCode-ld.map',
-	'-Xlinker',
-    '--gc-sections',
-    '--specs=nano.specs',
-    ]) 
+BOOT_env['LIB']         = Lib.BOOT_LIB
 
-# defines
-env.Append(CPPDEFINES = [
-    'STM32F407xx',
-	'__GNUC__',
-	'__FPU_PRESENT=1',
-	'__FPU_USED=1',
-])
+APP_env['LIB']          = Lib.APP_LIB
+
+# include file paths
+BOOT_env['CPPPATH']     = Include.BOOT_CPPPATH
+
+APP_env['CPPPATH']      = Include.APP_CPPPATH
 
 # Export Environment
-Export('env')
+Export('BOOT_env')
+Export('APP_env')
 
 
-def CallAllSConscript(dir_name):
-	firt = 0
-	Scon_Object = []
-	for dirpath, dirnames, filenames in os.walk(dir_name):
-		#for filename in filenames:
-			if ("SConscript" in filenames):
-				SConscript_path_file = os.path.join(dirpath,"SConscript")
-				Scon_Object += SConscript([SConscript_path_file])
-	return Scon_Object
+# def CallAllSConscript(dir_name):
+	# firt = 0
+	# Scon_Object = []
+	# for dirpath, dirnames, filenames in os.walk(dir_name):
+		# #for filename in filenames:
+			# if ("SConscript" in filenames):
+				# SConscript_path_file = os.path.join(dirpath,"SConscript")
+				# Scon_Object += SConscript([SConscript_path_file])
+	# return Scon_Object
 
-Object = CallAllSConscript(os.getcwd()+'\\Source')
+def GetAllObject(source):
+   Export('BOOT_env')
+   B_Object = []
+   A_Object = []
+   for dirpath, dirnames, filenames in os.walk(source):
+      if ("SConscript" in filenames):
+         SConscript_path_file = os.path.join(dirpath,"SConscript")
+         B,A = SConscript([SConscript_path_file])
+         B_Object += B
+         A_Object += A
+   return B_Object,A_Object
+
+BOOT_Object,APP_Object = GetAllObject(os.getcwd()+'\\Source')
+
+#   CallAllSConscript(BOOT_env['WorkSpace']+'\\Source')
 
 # build everything
-TARGETNAME = 'Build\\bin\\TestCode-g++'
-FILELIST = Object #Glob('*.cpp')
-prg = env.Program(
-    target = TARGETNAME,
-    source = FILELIST,
+BOOT_prg = BOOT_env.Program(
+    target = BOOT_env['Out'],
+    source = BOOT_Object,
 )
-
-# MapEnv = env.Clone(LINKFLAGS = [
-	# '-TTools\\LinkerFile\\stm32_rom.ld',
-	# '-Map=Build\\bin\\TestCode-ld.map',
-	# ],
-	# PROGSUFFIX = [
-	# '.elf'
-	# ],
-	# LINK =[
-	# 'Tools\\gcc-arm-none-eabi\\bin\\arm-none-eabi-ld',
-	# ],)
-	
-# MapEnv.Program(
-    # target = 'Build\\bin\\TestCode-ld',
-    # source = FILELIST,
-	# )
+APP_prg = APP_env.Program(
+    target = APP_env['Out'],
+    source = APP_Object,
+)
 
 # binary file builder -O ihex
 def arm_generator_bin(source, target, env, for_signature):
@@ -168,7 +117,24 @@ def arm_generator_hex(source, target, env, for_signature):
     return '$OBJCOPY -g -O ihex %s %s'%(source[0], target[0])
 def arm_generator_sre(source, target, env, for_signature):
     return '$OBJCOPY -g -O srec %s %s'%(source[0], target[0])
-env.Append(BUILDERS = {
+BOOT_env.Append(BUILDERS = {
+    'Objcopy_bin': Builder(
+        generator=arm_generator_bin,
+        suffix='.bin',
+        src_suffix='.elf'
+    ),
+    'Objcopy_hex': Builder(
+        generator=arm_generator_hex,
+        suffix='.hex',
+        src_suffix='.elf'
+    ),
+    'Objcopy_sre': Builder(
+        generator=arm_generator_sre,
+        suffix='.sre',
+        src_suffix='.elf'
+    ),
+})
+APP_env.Append(BUILDERS = {
     'Objcopy_bin': Builder(
         generator=arm_generator_bin,
         suffix='.bin',
@@ -186,12 +152,15 @@ env.Append(BUILDERS = {
     ),
 })
 
-def CheckObjectPath(Object):
+def GetAllObjectPath(Object):
 	ObjectPath = ''
 	for path in Object:
 		ObjectPath = os.path.join(ObjectPath+' ',str(path))
 	return ObjectPath
 
-env.Objcopy_bin(prg)
-env.Objcopy_hex(prg)
-env.Objcopy_sre(prg)
+BOOT_env.Objcopy_bin(BOOT_prg)
+BOOT_env.Objcopy_hex(BOOT_prg)
+BOOT_env.Objcopy_sre(BOOT_prg)
+APP_env.Objcopy_bin(APP_prg)
+APP_env.Objcopy_hex(APP_prg)
+APP_env.Objcopy_sre(APP_prg)

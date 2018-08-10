@@ -1,13 +1,14 @@
-Import('env')
+Import('BOOT_env')
+Import('APP_env')
 import os
 
-WorkSpacePath = env['WorkSpace']
+WorkSpacePath = APP_env['WorkSpace']
 
 length = len(WorkSpacePath)
 
 SourcePath = os.getcwd()[length:]
-
-objects = env.Object(target = [WorkSpacePath+'/Build/obj'+SourcePath+'/main'] , source = ['main.c'], CPPPATH = Split(WorkSpacePath+'/Source/'))
+BOOT_objects = BOOT_env.Object(target = [BOOT_env['TargetPath']+SourcePath+'/main'] , source = ['main.c'], CPPPATH = Split(WorkSpacePath+'/Source/'))
+APP_objects = APP_env.Object(target = [APP_env['TargetPath']+SourcePath+'/main'] , source = ['main.c'], CPPPATH = Split(WorkSpacePath+'/Source/'))
 
 # print('Compile',objects)
-Return('objects')
+Return('BOOT_objects','APP_objects')
