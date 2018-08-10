@@ -2,10 +2,14 @@
 
 // #include "Generic\Driver\Display\display.h"
 
-// void _exit(void)
-// {
-//    while(1);
-// }
+void RTC_Alarm_IRQHandler(void)
+{
+   while(1);
+}
+void TIM1_CC_IRQHandler(void)
+{
+   while(1);
+}
 unsigned char test_value;
 float test_fvalue;
 int main(void)

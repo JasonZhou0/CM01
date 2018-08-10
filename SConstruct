@@ -50,7 +50,7 @@ APP_env['OutName']      = APP_env['WorkSpace']+'\\'+Compiler.APP_OutName
 APP_env['Out']          = APP_env['WorkSpace']+'\\'+Compiler.APP_Out
 
 # project defines
-BOOT_env['CPPDEFINES']  = Define.APP_CPPDEFINES
+BOOT_env['CPPDEFINES']  = Define.BOOT_CPPDEFINES
 
 APP_env['CPPDEFINES']   = Define.APP_CPPDEFINES
 

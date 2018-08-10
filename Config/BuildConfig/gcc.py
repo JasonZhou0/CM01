@@ -55,12 +55,12 @@ BOOT_LINKFLAGS = [
    '-mfloat-abi=hard',
    # '-mfloat-abi=soft',
    '-Xlinker',
+   '--gc-sections',
+   '--specs=nano.specs',
+   '-Xlinker',
    '-Map',
    '-Xlinker',
    BOOT_Out+'.map',
-   '-Xlinker',
-   '--gc-sections',
-   '--specs=nano.specs',
    ]
 APP_LINKFLAGS = [
    '-mcpu=cortex-m4',
@@ -71,11 +71,11 @@ APP_LINKFLAGS = [
    '-mfloat-abi=hard',
    # '-mfloat-abi=soft',
    '-Xlinker',
+   '--gc-sections',
+   '--specs=nano.specs',
+   '-Xlinker',
    '-Map',
    '-Xlinker',
    APP_Out+'.map',
-   '-Xlinker',
-   '--gc-sections',
-   '--specs=nano.specs',
    ]
    

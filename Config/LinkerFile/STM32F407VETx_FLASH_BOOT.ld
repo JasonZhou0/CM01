@@ -29,6 +29,11 @@
 *****************************************************************************
 */
 
+/* Address offset */
+BOOT_ADDR_OFFSET   = 0; /* 0x2000 */
+BOOT_START_ADDR    = 0x8000000+BOOT_ADDR_OFFSET;
+BOOT_SIZE          = 10K;
+
 /* Entry Point */
 ENTRY(Reset_Handler)
 
@@ -41,7 +46,7 @@ _Min_Stack_Size = 0x400;; /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 8K
+FLASH (rx)      : ORIGIN = BOOT_START_ADDR, LENGTH = BOOT_SIZE
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 128K
 CCMRAM (rw)      : ORIGIN = 0x10000000, LENGTH = 64K
 }
