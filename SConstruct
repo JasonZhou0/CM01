@@ -92,12 +92,12 @@ def GetAllObjectPath(Object):
 	return ObjectPath
 
 
-POST_ACTION = BOOT_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(BOOT_prg[0], BOOT_env['Out']) \
-            + BOOT_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(BOOT_prg[0], BOOT_env['Out']) \
-            + BOOT_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(BOOT_prg[0], BOOT_env['Out'])
-BOOT_env.AddPostAction(BOOT_prg, POST_ACTION)
+BOOT_POST_ACTION = BOOT_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0] \
+            + BOOT_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0] \
+            + BOOT_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0]
+BOOT_env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
 
-POST_ACTION = APP_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(APP_prg[0], APP_env['Out']) \
-            + APP_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(APP_prg[0], APP_env['Out']) \
-            + APP_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(APP_prg[0], APP_env['Out'])
-APP_env.AddPostAction(APP_prg, POST_ACTION)
+APP_POST_ACTION = APP_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0] \
+            + APP_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0] \
+            + APP_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0]
+APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
