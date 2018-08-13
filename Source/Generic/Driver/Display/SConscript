@@ -7,7 +7,7 @@ length = len(WorkSpacePath)
 SourcePath = os.getcwd()[length:]
 BOOT_objects = []
 
-APP_objects = APP_env.Object(target = [APP_env['TargetPath']+SourcePath+'/display'] , source = ['display.c'] , CPPPATH = Split(WorkSpacePath+'/Source/')) #
+APP_objects = APP_env.Object(target = [WorkSpacePath+APP_env['TargetPath']+SourcePath+'/display'] , source = ['display.c'] , CPPPATH = Split(WorkSpacePath+'/Source/')) #
 
 
 Return('BOOT_objects','APP_objects')

@@ -14,40 +14,16 @@ BOOT_env  = Environment(ENV = os.environ)
 APP_env   = Environment(ENV = os.environ)
 
 # Compiler
-BOOT_env['AR']          = Compiler.BOOT_CompileToolPath['AR']
-BOOT_env['AS']          = Compiler.BOOT_CompileToolPath['AS']
-BOOT_env['CC']          = Compiler.BOOT_CompileToolPath['CC']
-BOOT_env['CXX']         = Compiler.BOOT_CompileToolPath['CXX']
-BOOT_env['LINK']        = Compiler.BOOT_CompileToolPath['LINK']
-BOOT_env['RANLIB']      = Compiler.BOOT_CompileToolPath['RANLIB']
-BOOT_env['OBJCOPY']     = Compiler.BOOT_CompileToolPath['OBJCOPY']
-BOOT_env['PROGSUFFIX']  = Compiler.BOOT_CompileToolPath['PROGSUFFIX']
-BOOT_env['CCFLAGS']     += Compiler.BOOT_CCFLAGS
-BOOT_env['LINKFLAGS']   += Compiler.BOOT_LINKFLAGS
+for name in Compiler.BOOT_CompileTool.keys():
+   BOOT_env['%s'%name] = Compiler.BOOT_CompileTool['%s'%name]
 
-APP_env['AR']           = Compiler.APP_CompileToolPath['AR']
-APP_env['AS']           = Compiler.APP_CompileToolPath['AS']
-APP_env['CC']           = Compiler.APP_CompileToolPath['CC']
-APP_env['CXX']          = Compiler.APP_CompileToolPath['CXX']
-APP_env['LINK']         = Compiler.APP_CompileToolPath['LINK']
-APP_env['RANLIB']       = Compiler.APP_CompileToolPath['RANLIB']
-APP_env['OBJCOPY']      = Compiler.APP_CompileToolPath['OBJCOPY']
-APP_env['PROGSUFFIX']   = Compiler.APP_CompileToolPath['PROGSUFFIX']
-APP_env['CCFLAGS']      += Compiler.APP_CCFLAGS
-APP_env['LINKFLAGS']    += Compiler.APP_LINKFLAGS
+for name in Compiler.APP_CompileTool.keys():
+   APP_env['%s'%name] = Compiler.APP_CompileTool['%s'%name]
 
 # work space path
-BOOT_env['WorkSpace']   = os.getcwd()
-BOOT_env['TargetPath']  = BOOT_env['WorkSpace']+'\\'+Compiler.BOOT_TargetPath
-BOOT_env['OutPath']     = BOOT_env['WorkSpace']+'\\'+Compiler.BOOT_OutPath
-BOOT_env['OutName']     = BOOT_env['WorkSpace']+'\\'+Compiler.BOOT_OutName
-BOOT_env['Out']         = BOOT_env['WorkSpace']+'\\'+Compiler.BOOT_Out
+BOOT_env['WorkSpace']   = os.getcwd()+'\\'
 
-APP_env['WorkSpace']    = os.getcwd()
-APP_env['TargetPath']   = APP_env['WorkSpace']+'\\'+Compiler.APP_TargetPath
-APP_env['OutPath']      = APP_env['WorkSpace']+'\\'+Compiler.APP_OutPath
-APP_env['OutName']      = APP_env['WorkSpace']+'\\'+Compiler.APP_OutName
-APP_env['Out']          = APP_env['WorkSpace']+'\\'+Compiler.APP_Out
+APP_env['WorkSpace']    = os.getcwd()+'\\'
 
 # project defines
 BOOT_env['CPPDEFINES']  = Define.BOOT_CPPDEFINES
@@ -85,7 +61,6 @@ Export('APP_env')
 	# return Scon_Object
 
 def GetAllObject(source):
-   Export('BOOT_env')
    B_Object = []
    A_Object = []
    for dirpath, dirnames, filenames in os.walk(source):
@@ -110,57 +85,19 @@ APP_prg = APP_env.Program(
     source = APP_Object,
 )
 
-# binary file builder -O ihex
-def arm_generator_bin(source, target, env, for_signature):
-    return '$OBJCOPY -g -O binary %s %s'%(source[0], target[0])
-def arm_generator_hex(source, target, env, for_signature):
-    return '$OBJCOPY -g -O ihex %s %s'%(source[0], target[0])
-def arm_generator_sre(source, target, env, for_signature):
-    return '$OBJCOPY -g -O srec %s %s'%(source[0], target[0])
-BOOT_env.Append(BUILDERS = {
-    'Objcopy_bin': Builder(
-        generator=arm_generator_bin,
-        suffix='.bin',
-        src_suffix='.elf'
-    ),
-    'Objcopy_hex': Builder(
-        generator=arm_generator_hex,
-        suffix='.hex',
-        src_suffix='.elf'
-    ),
-    'Objcopy_sre': Builder(
-        generator=arm_generator_sre,
-        suffix='.sre',
-        src_suffix='.elf'
-    ),
-})
-APP_env.Append(BUILDERS = {
-    'Objcopy_bin': Builder(
-        generator=arm_generator_bin,
-        suffix='.bin',
-        src_suffix='.elf'
-    ),
-    'Objcopy_hex': Builder(
-        generator=arm_generator_hex,
-        suffix='.hex',
-        src_suffix='.elf'
-    ),
-    'Objcopy_sre': Builder(
-        generator=arm_generator_sre,
-        suffix='.sre',
-        src_suffix='.elf'
-    ),
-})
-
 def GetAllObjectPath(Object):
 	ObjectPath = ''
 	for path in Object:
 		ObjectPath = os.path.join(ObjectPath+' ',str(path))
 	return ObjectPath
 
-BOOT_env.Objcopy_bin(BOOT_prg)
-BOOT_env.Objcopy_hex(BOOT_prg)
-BOOT_env.Objcopy_sre(BOOT_prg)
-APP_env.Objcopy_bin(APP_prg)
-APP_env.Objcopy_hex(APP_prg)
-APP_env.Objcopy_sre(APP_prg)
+
+POST_ACTION = BOOT_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(BOOT_prg[0], BOOT_env['Out']) \
+            + BOOT_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(BOOT_prg[0], BOOT_env['Out']) \
+            + BOOT_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(BOOT_prg[0], BOOT_env['Out'])
+BOOT_env.AddPostAction(BOOT_prg, POST_ACTION)
+
+POST_ACTION = APP_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(APP_prg[0], APP_env['Out']) \
+            + APP_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(APP_prg[0], APP_env['Out']) \
+            + APP_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(APP_prg[0], APP_env['Out'])
+APP_env.AddPostAction(APP_prg, POST_ACTION)

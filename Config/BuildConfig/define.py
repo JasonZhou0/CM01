@@ -1,9 +1,11 @@
 
 # project defines
 BOOT_CPPDEFINES = [
-   'STM32F407xx',
-   '__GNUC__',
-   '__FPU_PRESENT=1',
-   '__FPU_USED=1',
+   # 'STM32F407xx',
+   'STM32F407VE',
+   'STM32F4XX',
+   'USE_STDPERIPH_DRIVER',
+   '__ASSEMBLY__',
+   '__FPU_USED',
    ]
 APP_CPPDEFINES = BOOT_CPPDEFINES
