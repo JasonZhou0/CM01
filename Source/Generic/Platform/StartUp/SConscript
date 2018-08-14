@@ -19,7 +19,7 @@ BOOT_File.update(CheckFile(BOOT_TargetBasePath,'main.c'))
 
 # ************APP_objects************
 APP_File = {}
-APP_File.update(CheckFile(BOOT_TargetBasePath,'main.c'))
+APP_File.update(CheckFile(APP_TargetBasePath,'main.c'))
    
    
 # ************OutPut************

@@ -157,24 +157,24 @@
 #define NANO_UNITS_PER_UNIT   (1000000000u)
 
 /* Casting constants */
-#pragma PRQA_MACRO_MESSAGES_OFF "P_CHAR", 310, 311
-#define P_CHAR             (AlvChar*)
-#pragma PRQA_MACRO_MESSAGES_OFF "CONST_P_CHAR", 310, 3631
-#define CONST_P_CHAR       (const AlvChar*)
-#pragma PRQA_MACRO_MESSAGES_OFF "P_U8", 310, 311
-#define P_U8               (U8*)
-#pragma PRQA_MACRO_MESSAGES_OFF "CONST_P_U8", 310, 311
-#define CONST_P_U8         (const U8*)
-#pragma PRQA_MACRO_MESSAGES_OFF "CONST_P_U8_CONST", 310, 311
-#define CONST_P_U8_CONST   (const U8* const)
+// #pragma PRQA_MACRO_MESSAGES_OFF "P_CHAR", 310, 311
+// #define P_CHAR             (AlvChar*)
+// #pragma PRQA_MACRO_MESSAGES_OFF "CONST_P_CHAR", 310, 3631
+// #define CONST_P_CHAR       (const AlvChar*)
+// #pragma PRQA_MACRO_MESSAGES_OFF "P_U8", 310, 311
+// #define P_U8               (U8*)
+// #pragma PRQA_MACRO_MESSAGES_OFF "CONST_P_U8", 310, 311
+// #define CONST_P_U8         (const U8*)
+// #pragma PRQA_MACRO_MESSAGES_OFF "CONST_P_U8_CONST", 310, 311
+// #define CONST_P_U8_CONST   (const U8* const)
 
 #if defined(__TASKING__) || defined(__GNUC__) || defined(_MSC_VER)
 /*! \qacexception 1055: The keyword 'inline' has been used. REFERENCE - ISO:C99-6.7.4 Function specifiers
  *                      This is used for optimizations.
  */
-#pragma PRQA_MACRO_MESSAGES_OFF "ALV_INLINE" 1055
-#define ALV_INLINE   static inline
-#define ALV_RESTRICT restrict
+// #pragma PRQA_MACRO_MESSAGES_OFF "ALV_INLINE" 1055
+// #define ALV_INLINE   static inline
+// #define ALV_RESTRICT restrict
 #else
 #error "Unsupported compiler"
 #endif
@@ -206,6 +206,17 @@ typedef unsigned long      U32;     /*           0 .. 4294967295      */
 typedef signed long long   S64;     /* -9223372036854775807 .. +9223372036854775807     */
 typedef unsigned long long U64;     /*                    0 .. 18446744073709551615     */
 typedef float              F32;     /*        -3.402823e+38 .. +3.402823e+38            */
+typedef double             F64;     /*        -1.7*10(-308)бл1.7*10(308)                */
+typedef signed char        s8;      /*        -128 .. +127            */
+typedef unsigned char      u8;      /*           0 .. 255             */
+typedef signed short       s16;     /*      -32768 .. +32767          */
+typedef unsigned short     u16;     /*           0 .. 65535           */
+typedef signed long        s32;     /* -2147483648 .. +2147483647     */
+typedef unsigned long      u32;     /*           0 .. 4294967295      */
+typedef signed long long   s64;     /* -9223372036854775807 .. +9223372036854775807     */
+typedef unsigned long long u64;     /*                    0 .. 18446744073709551615     */
+typedef float              f32;     /*        -3.402823e+38 .. +3.402823e+38            */
+typedef double             f64;     /*        -1.7*10(-308)бл1.7*10(308)                */
 #else
 #error "Unsupported compiler"
 #endif

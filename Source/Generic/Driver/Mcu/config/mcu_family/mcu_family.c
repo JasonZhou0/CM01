@@ -17,6 +17,7 @@
 /* **** Includes **** */
 
 #include "types.h"
+#include "stm32f4xx.h"
 
 /*! \qacexception 0303: Cast between a pointer to volatile object and an integral type. Register access */
 /*! \qacexception 3345: Statement contains more than one access to objects that are volatile. Register access */
@@ -52,6 +53,13 @@ static U32 safetyEndinitSpinlock = 0u;
 /* **** Global Variables **** */
 
 /* **** Static Function Definitions **** */
+
+/* Interrupt Service Routines code address offset */
+static void InterruptServiceRoutinesCodeAddressOffset(u32 offset)
+{
+    NVIC_SetVectorTable(NVIC_VectTab_FLASH, offset & 0x00FFFFFF);//向量表位于FLASH中//
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//
+}
 
 static void setK2Divider(U8 divider)
 {
@@ -143,4 +151,15 @@ void MCU_initClocks(void)
 AlvBool MCU_isRamReliable(void)
 {
 
+}
+
+void assert_failed(uint8_t* file, uint32_t line)
+{
+   
+
+}
+
+void ISR_AddressInit(void)
+{
+   InterruptServiceRoutinesCodeAddressOffset(0x08002000);
 }

@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include "mcu.h"
 // #include "Generic\Driver\Display\display.h"
 
 void RTC_Alarm_IRQHandler(void)
@@ -14,6 +14,7 @@ unsigned char test_value;
 float test_fvalue;
 int main(void)
 {
+   mcu_McuInit();
    // Display();
 
    while (1)
