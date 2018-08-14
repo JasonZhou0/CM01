@@ -4,8 +4,8 @@
 
 **  File        : LinkerScript.ld
 **
-**  Abstract    : Linker script for STM32F407VGTx Device with
-**                1024KByte FLASH, 128KByte RAM
+**  Abstract    : Linker script for STM32F407VETx Device with
+**                512KByte FLASH, 128KByte RAM
 **
 **                Set heap size, stack size and stack location according
 **                to application requirements.
@@ -33,7 +33,7 @@
 ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
-_estack = 0x20020000;      /* end of RAM 128K*/
+_estack = 0x20020000;      /* end of RAM */
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size = 0x200;    /* required amount of heap  */
 _Min_Stack_Size = 0x400;   /* required amount of stack */
@@ -41,11 +41,9 @@ _Min_Stack_Size = 0x400;   /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-   FLASH (rx)        : ORIGIN = 0x08000000, LENGTH = 512K /* 512K */
-   FLASH_ISR (rx)    : ORIGIN = 0x08002000, LENGTH = 0x200 /* sector 0, 16 KiB */
-   FLASH_TEXT (rx)   : ORIGIN = 0x08002000, LENGTH = 504K /* sectors 5,6,7,8, 4*128KiB = 512 KiB (could increase it more) */
-   RAM (xrw)         : ORIGIN = 0x20000000, LENGTH = 128K
-   CCMRAM (rw)       : ORIGIN = 0x10000000, LENGTH = 64K
+   FLASH (rx)  : ORIGIN = 0x08002000,  LENGTH = 504K
+   RAM (xrw)   : ORIGIN = 0x20000000,  LENGTH = 128K
+   CCMRAM (rw) : ORIGIN = 0x10000000,  LENGTH = 64K
 }
 
 /* Define output sections */
@@ -57,9 +55,9 @@ SECTIONS
     . = ALIGN(4);
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
-  } >FLASH_TEXT
+  } >FLASH
 
-  /* The program code and other data goes into FLASH_TEXT */
+  /* The program code and other data goes into FLASH */
   .text :
   {
     . = ALIGN(4);
@@ -74,44 +72,44 @@ SECTIONS
 
     . = ALIGN(4);
     _etext = .;        /* define a global symbols at end of code */
-  } >FLASH_TEXT
+  } >FLASH
 
-  /* Constant data goes into FLASH_TEXT */
+  /* Constant data goes into FLASH */
   .rodata :
   {
     . = ALIGN(4);
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
     . = ALIGN(4);
-  } >FLASH_TEXT
+  } >FLASH
 
-  .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >FLASH_TEXT
+  .ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >FLASH
   .ARM : {
     __exidx_start = .;
     *(.ARM.exidx*)
     __exidx_end = .;
-  } >FLASH_TEXT
+  } >FLASH
 
   .preinit_array     :
   {
     PROVIDE_HIDDEN (__preinit_array_start = .);
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
-  } >FLASH_TEXT
+  } >FLASH
   .init_array :
   {
     PROVIDE_HIDDEN (__init_array_start = .);
     KEEP (*(SORT(.init_array.*)))
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
-  } >FLASH_TEXT
+  } >FLASH
   .fini_array :
   {
     PROVIDE_HIDDEN (__fini_array_start = .);
     KEEP (*(SORT(.fini_array.*)))
     KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
-  } >FLASH_TEXT
+  } >FLASH
 
   /* used by the startup to initialize data */
   _sidata = LOADADDR(.data);
@@ -126,7 +124,7 @@ SECTIONS
 
     . = ALIGN(4);
     _edata = .;        /* define a global symbol at data end */
-  } >RAM AT> FLASH_TEXT
+  } >RAM AT> FLASH
 
   _siccmram = LOADADDR(.ccmram);
 
@@ -145,7 +143,7 @@ SECTIONS
     
     . = ALIGN(4);
     _eccmram = .;       /* create a global symbol at ccmram end */
-  } >CCMRAM AT> FLASH_TEXT
+  } >CCMRAM AT> FLASH
 
   
   /* Uninitialized data section */

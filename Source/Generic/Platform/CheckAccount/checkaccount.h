@@ -1,1 +1,0 @@
-int CheckAccount(char *name, unsigned int *len);

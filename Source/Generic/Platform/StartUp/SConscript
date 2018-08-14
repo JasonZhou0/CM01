@@ -7,8 +7,22 @@ WorkSpacePath = APP_env['WorkSpace']
 length = len(WorkSpacePath)
 
 SourcePath = os.getcwd()[length:]
-BOOT_objects = BOOT_env.Object(target = [WorkSpacePath+BOOT_env['TargetPath']+SourcePath+'/main'] , source = ['main.c'], CPPPATH = Split(WorkSpacePath+'/Source/'))
-APP_objects = APP_env.Object(target = [WorkSpacePath+APP_env['TargetPath']+SourcePath+'/main'] , source = ['main.c'], CPPPATH = Split(WorkSpacePath+'/Source/'))
 
-# print('Compile',objects)
+BOOT_TargetBasePath  = WorkSpacePath+BOOT_env['TargetPath']+SourcePath
+APP_TargetBasePath   = WorkSpacePath+APP_env['TargetPath']+SourcePath
+# ************BOOT_objects************
+BOOT_objects = BOOT_env.Object(
+   target   = BOOT_TargetBasePath+'/main', 
+   source   = 'main.c', 
+   CPPPATH  = [
+      ]
+   )
+# ************APP_objects************
+APP_objects = APP_env.Object(
+   target   = [APP_TargetBasePath+'/main'] , 
+   source   = ['main.c'], 
+   CPPPATH  = [
+      ]
+   )
+
 Return('BOOT_objects','APP_objects')
