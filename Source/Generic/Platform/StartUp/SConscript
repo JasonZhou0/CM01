@@ -10,19 +10,24 @@ SourcePath = os.getcwd()[length:]
 
 BOOT_TargetBasePath  = WorkSpacePath+BOOT_env['TargetPath']+SourcePath
 APP_TargetBasePath   = WorkSpacePath+APP_env['TargetPath']+SourcePath
+def CheckFile(BasePath,SourcePath):
+   return {BasePath+'\\'+SourcePath[:-2]:SourcePath}
 # ************BOOT_objects************
-BOOT_objects = BOOT_env.Object(
-   target   = BOOT_TargetBasePath+'/main', 
-   source   = 'main.c', 
-   CPPPATH  = [
-      ]
-   )
+BOOT_File = {}
+BOOT_File.update(CheckFile(BOOT_TargetBasePath,'main.c'))
+
+
 # ************APP_objects************
-APP_objects = APP_env.Object(
-   target   = [APP_TargetBasePath+'/main'] , 
-   source   = ['main.c'], 
-   CPPPATH  = [
-      ]
-   )
+APP_File = {}
+APP_File.update(CheckFile(BOOT_TargetBasePath,'main.c'))
+   
+   
+# ************OutPut************
+BOOT_objects = []
+for key,value in BOOT_File.items():
+   BOOT_objects += BOOT_env.Object(target = key, source = value)
+APP_objects = []
+for key,value in APP_File.items():
+   APP_objects += APP_env.Object(target = key, source = value)
 
 Return('BOOT_objects','APP_objects')
