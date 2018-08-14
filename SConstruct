@@ -50,16 +50,6 @@ Export('BOOT_env')
 Export('APP_env')
 
 
-# def CallAllSConscript(dir_name):
-	# firt = 0
-	# Scon_Object = []
-	# for dirpath, dirnames, filenames in os.walk(dir_name):
-		# #for filename in filenames:
-			# if ("SConscript" in filenames):
-				# SConscript_path_file = os.path.join(dirpath,"SConscript")
-				# Scon_Object += SConscript([SConscript_path_file])
-	# return Scon_Object
-
 def GetAllObject(source):
    B_Object = []
    A_Object = []
@@ -94,10 +84,13 @@ def GetAllObjectPath(Object):
 
 BOOT_POST_ACTION = BOOT_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0] \
             + BOOT_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0] \
-            + BOOT_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0]
+            + BOOT_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0] \
+            + ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(BOOT_prg[0], BOOT_prg[0])
+            
 BOOT_env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
 
 APP_POST_ACTION = APP_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0] \
             + APP_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0] \
-            + APP_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0]
+            + APP_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0] \
+            + ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
 APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
