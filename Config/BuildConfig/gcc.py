@@ -40,15 +40,15 @@ BOOT_CompileTool = {
 }
 BOOT_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fsigned-char -ffunction-sections -fdata-sections -std=gnu11 -fmessage-length=0'
 
-BOOT_CompileTool['CCFLAGS']      = BOOT_DEVICE + ' -g -Wfatal-errors -Wall -Wextra' # -DSTM32F407VE -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
+BOOT_CompileTool['CCFLAGS']      = BOOT_DEVICE + ' -Wfatal-errors -Wall -Wextra' # -DSTM32F407VE -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
 
 BOOT_CompileTool['ASFLAGS']      = ' -c' + BOOT_DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
 
 BOOT_CompileTool['LINKFLAGS']    = BOOT_DEVICE + ' -lm -lgcc -lc' + ' -nostartfiles -Wl,--gc-sections,-Map=%s.map,-cref,-u,Reset_Handler -T %s'%(BOOT_Out,BOOT_LD)
 
 if BUILD == 'debug':
-   BOOT_CompileTool['CCFLAGS']   += ' -O0 -gdwarf-2'
-   BOOT_CompileTool['ASFLAGS']   += ' -gdwarf-2'
+   BOOT_CompileTool['CCFLAGS']   += ' -g -C -O0 -gdwarf-2'
+   BOOT_CompileTool['ASFLAGS']   += ' -g -C -gdwarf-2'
 else:
    BOOT_CompileTool['CCFLAGS'] += ' -O2'
 
@@ -75,15 +75,15 @@ APP_CompileTool = {
 }
 APP_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fsigned-char -ffunction-sections -fdata-sections -std=gnu11 -fmessage-length=0'
 
-APP_CompileTool['CCFLAGS']      = APP_DEVICE + ' -g -Wfatal-errors -Wall -Wextra' # -DSTM32F407ZG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
+APP_CompileTool['CCFLAGS']      = APP_DEVICE + ' -Wfatal-errors -Wall -Wextra' # -DSTM32F407ZG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
 
 APP_CompileTool['ASFLAGS']      = ' -c' + APP_DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
 
 APP_CompileTool['LINKFLAGS']    = APP_DEVICE + ' -lm -lgcc -lc' + ' -nostartfiles -Wl,--gc-sections,-Map=%s.map,-cref,-u,Reset_Handler -T %s'%(APP_Out,APP_LD)
 
 if BUILD == 'debug':
-   APP_CompileTool['CCFLAGS']   += ' -O0 -gdwarf-2'
-   APP_CompileTool['ASFLAGS']   += ' -gdwarf-2'
+   APP_CompileTool['CCFLAGS']   += ' -g -C -O0 -gdwarf-2'
+   APP_CompileTool['ASFLAGS']   += ' -g -C -gdwarf-2'
 else:
    APP_CompileTool['CCFLAGS'] += ' -O2'
 
