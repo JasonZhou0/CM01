@@ -161,5 +161,5 @@ void assert_failed(uint8_t* file, uint32_t line)
 
 void ISR_AddressInit(void)
 {
-   InterruptServiceRoutinesCodeAddressOffset(0x08002000);
+   InterruptServiceRoutinesCodeAddressOffset(CODE_ENTRY_ADDRESS);
 }
