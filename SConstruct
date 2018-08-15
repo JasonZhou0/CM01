@@ -3,7 +3,7 @@ import Config.BuildConfig.gcc       as Compiler
 import Config.BuildConfig.include   as Include
 import Config.BuildConfig.define    as Define
 import Config.BuildConfig.library   as Lib
-
+import Config.BuildConfig.path   	as path
 # import shutil
 # # delete folder "Build" and all files
 # if os.path.exists('Build'):
@@ -54,21 +54,83 @@ APP_env['CPPPATH']      = Include.APP_CPPPATH
 Export('BOOT_env')
 Export('APP_env')
 
-
-def GetAllObject(source):
+def GetAllObject():
    B_Object = []
    A_Object = []
-   for dirpath, dirnames, filenames in os.walk(source):
+   ALL_Object = []
+   # for dirpath, dirnames, filenames in os.walk(path.MCULibraryPath):
+      # if ("SConscript" in filenames):
+         # SConscript_path_file = os.path.join(dirpath,"SConscript")
+         # if SConscript_path_file not in ALL_Object:
+            # ALL_Object += SConscript_path_file
+            # B,A = SConscript([SConscript_path_file])
+            # if B not in B_Object:
+               # B_Object+=B
+            # if A not in A_Object:
+               # A_Object+=A
+   # for dirpath, dirnames, filenames in os.walk(path.DriverPath):
+      # if ("SConscript" in filenames):
+         # SConscript_path_file = os.path.join(dirpath,"SConscript")
+         # if SConscript_path_file not in ALL_Object:
+            # ALL_Object += SConscript_path_file
+            # B,A = SConscript([SConscript_path_file])
+            # if B not in B_Object:
+               # B_Object+=B
+            # if A not in A_Object:
+               # A_Object+=A
+   # for dirpath, dirnames, filenames in os.walk(path.ServicePath):
+      # if ("SConscript" in filenames):
+         # SConscript_path_file = os.path.join(dirpath,"SConscript")
+         # if SConscript_path_file not in ALL_Object:
+            # ALL_Object += SConscript_path_file
+            # B,A = SConscript([SConscript_path_file])
+            # if B not in B_Object:
+               # B_Object+=B
+            # if A not in A_Object:
+               # A_Object+=A
+   # for dirpath, dirnames, filenames in os.walk(path.SupportPath):
+      # if ("SConscript" in filenames):
+         # SConscript_path_file = os.path.join(dirpath,"SConscript")
+         # if SConscript_path_file not in ALL_Object:
+            # ALL_Object += SConscript_path_file
+            # B,A = SConscript([SConscript_path_file])
+            # if B not in B_Object:
+               # B_Object+=B
+            # if A not in A_Object:
+               # A_Object+=A
+   # for dirpath, dirnames, filenames in os.walk(path.PlatformPath):
+      # if ("SConscript" in filenames):
+         # SConscript_path_file = os.path.join(dirpath,"SConscript")
+         # if SConscript_path_file not in ALL_Object:
+            # ALL_Object += SConscript_path_file
+            # B,A = SConscript([SConscript_path_file])
+            # if B not in B_Object:
+               # B_Object+=B
+            # if A not in A_Object:
+               # A_Object+=A
+   # for dirpath, dirnames, filenames in os.walk(path.SourceBasePath):
+      # if ("SConscript" in filenames):
+         # SConscript_path_file = os.path.join(dirpath,"SConscript")
+         # if SConscript_path_file not in ALL_Object:
+            # ALL_Object += SConscript_path_file
+            # B,A = SConscript([SConscript_path_file])
+            # if B not in B_Object:
+               # B_Object+=B
+            # if A not in A_Object:
+               # A_Object+=A
+   for dirpath, dirnames, filenames in os.walk(path.SourceBasePath):
       if ("SConscript" in filenames):
          SConscript_path_file = os.path.join(dirpath,"SConscript")
-         B,A = SConscript([SConscript_path_file])
-         B_Object += B
-         A_Object += A
+         if SConscript_path_file not in ALL_Object:
+            ALL_Object += SConscript_path_file
+            B,A = SConscript([SConscript_path_file])
+            if B not in B_Object:
+               B_Object+=B
+            if A not in A_Object:
+               A_Object+=A
    return B_Object,A_Object
 
-BOOT_Object,APP_Object = GetAllObject(os.getcwd()+'\\Source')
-
-#   CallAllSConscript(BOOT_env['WorkSpace']+'\\Source')
+BOOT_Object,APP_Object = GetAllObject()
 
 # build everything
 BOOT_prg = BOOT_env.Program(
@@ -86,17 +148,17 @@ def GetAllObjectPath(Object):
 		ObjectPath = os.path.join(ObjectPath+' ',str(path))
 	return ObjectPath
 
-try:
-   BOOT_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(BOOT_prg[0], BOOT_prg[0])
-   BOOT_env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
-except:
-   pass
+# try:
+   # BOOT_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(BOOT_prg[0], BOOT_prg[0])
+   # BOOT_env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
+# except:
+   # pass
    
-try:
-   APP_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
-   APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
-except:
-   pass
+# try:
+   # APP_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
+   # APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
+# except:
+   # pass
    
    
 BOOT_POST_ACTION = BOOT_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(BOOT_prg[0], BOOT_env['Out']) \
