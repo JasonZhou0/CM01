@@ -13,6 +13,11 @@ import Config.BuildConfig.library   as Lib
 BOOT_env  = Environment(ENV = os.environ)
 APP_env   = Environment(ENV = os.environ)
 
+BOOT_env['CCCOMSTR']    = "Compiling $TARGET"
+BOOT_env['LINKCOMSTR']  = "Linking $TARGET"
+APP_env['CCCOMSTR']     = "Compiling $TARGET"
+APP_env['LINKCOMSTR']   = "Linking $TARGET"
+
 # Compiler
 for name in Compiler.BOOT_CompileTool.keys():
    BOOT_env['%s'%name] = Compiler.BOOT_CompileTool['%s'%name]
@@ -81,16 +86,28 @@ def GetAllObjectPath(Object):
 		ObjectPath = os.path.join(ObjectPath+' ',str(path))
 	return ObjectPath
 
-
-BOOT_POST_ACTION = BOOT_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0] \
-            + BOOT_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0] \
-            + BOOT_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(BOOT_prg[0], BOOT_env['Out']) + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0]
+try:
+   BOOT_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(BOOT_prg[0], BOOT_prg[0])
+   BOOT_env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
+except:
+   pass
+   
+try:
+   APP_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
+   APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
+except:
+   pass
+   
+   
+BOOT_POST_ACTION = BOOT_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(BOOT_prg[0], BOOT_env['Out']) \
+            + BOOT_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(BOOT_prg[0], BOOT_env['Out']) \
+            + BOOT_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(BOOT_prg[0], BOOT_env['Out']) # + BOOT_env['SIZE'] + ' %s \n'%BOOT_prg[0]
 #            + ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(BOOT_prg[0], BOOT_prg[0])
             
 BOOT_env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
 
-APP_POST_ACTION = APP_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0] \
-            + APP_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0] \
-            + APP_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(APP_prg[0], APP_env['Out']) + APP_env['SIZE'] + ' %s \n'%APP_prg[0]
+APP_POST_ACTION = APP_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(APP_prg[0], APP_env['Out']) \
+            + APP_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(APP_prg[0], APP_env['Out'])\
+            + APP_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(APP_prg[0], APP_env['Out']) # + APP_env['SIZE'] + ' %s \n'%APP_prg[0]
 #            + ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
 APP_env.AddPostAction(APP_prg, APP_POST_ACTION)

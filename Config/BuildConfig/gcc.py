@@ -38,9 +38,9 @@ BOOT_CompileTool = {
    'OBJCOPY':CompileToolBacePath+'arm-none-eabi-objcopy',
    'PROGSUFFIX':'.elf',
 }
-BOOT_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fsigned-char -ffunction-sections -fdata-sections -std=gnu11 -fmessage-length=0'
+BOOT_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fsigned-char -ffunction-sections -fdata-sections -std=gnu11 -fmessage-length=0 -pipe'
 
-BOOT_CompileTool['CCFLAGS']      = BOOT_DEVICE + ' -Wfatal-errors -Wall -Wextra' # -DSTM32F407VE -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
+BOOT_CompileTool['CCFLAGS']      = BOOT_DEVICE + ' -Wfatal-errors -Wall -Wextra -Wunreachable-code' # -DSTM32F407VE -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
 
 BOOT_CompileTool['ASFLAGS']      = ' -c' + BOOT_DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
 
@@ -63,7 +63,7 @@ BOOT_CompileTool['Out']          = BOOT_Out
 # Compile tool path define
 APP_CompileTool = {
    'AR':CompileToolBacePath+'arm-none-eabi-ar',
-   'AS':CompileToolBacePath+'arm-none-eabi-gcc',
+   'AS':CompileToolBacePath+'arm-none-eabi-as',
    'CC':CompileToolBacePath+'arm-none-eabi-gcc',
    'CXX':CompileToolBacePath+'arm-none-eabi-g++',
    'LINK':CompileToolBacePath+'arm-none-eabi-gcc',
@@ -73,17 +73,17 @@ APP_CompileTool = {
    'OBJCOPY':CompileToolBacePath+'arm-none-eabi-objcopy',
    'PROGSUFFIX':'.elf',
 }
-APP_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fsigned-char -ffunction-sections -fdata-sections -std=gnu11 -fmessage-length=0'
+APP_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsigned-char -std=gnu11 -fmessage-length=0'
 
-APP_CompileTool['CCFLAGS']      = APP_DEVICE + ' -Wfatal-errors -Wall -Wextra' # -DSTM32F407ZG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
+APP_CompileTool['CCFLAGS']      = APP_DEVICE + ' -ffunction-sections -fdata-sections -Wfatal-errors -Wall -Wextra' # -DSTM32F407ZG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
 
-APP_CompileTool['ASFLAGS']      = ' -c' + APP_DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
+# APP_CompileTool['ASFLAGS']      = ' -c' + APP_DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
 
-APP_CompileTool['LINKFLAGS']    = APP_DEVICE + ' -lm -lgcc -lc' + ' -nostartfiles -Wl,--gc-sections,-Map=%s.map,-cref,-u,Reset_Handler -T %s'%(APP_Out,APP_LD)
+APP_CompileTool['LINKFLAGS']    = APP_DEVICE + ' -Wl,--gc-sections,-Map=%s.map -T %s'%(APP_Out,APP_LD)
 
 if BUILD == 'debug':
-   APP_CompileTool['CCFLAGS']   += ' -g -C -O0 -gdwarf-2'
-   APP_CompileTool['ASFLAGS']   += ' -g -C -gdwarf-2'
+   APP_CompileTool['CCFLAGS']   += ' -g -O0'# -gdwarf-2'
+   # APP_CompileTool['ASFLAGS']   += ' -g -gdwarf-2'
 else:
    APP_CompileTool['CCFLAGS'] += ' -O2'
 

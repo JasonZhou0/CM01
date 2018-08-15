@@ -2,7 +2,7 @@
 # project defines
 BOOT_CPPDEFINES = [
    # 'STM32F407xx',
-   '__GNUC__',
+   # '__GNUC__',
    'STM32F407VE',
    'STM32F4XX',
    'USE_STDPERIPH_DRIVER',
@@ -14,7 +14,7 @@ BOOT_CPPDEFINES = [
    ]
 APP_CPPDEFINES = [
    # 'STM32F407xx',
-   '__GNUC__',
+   # '__GNUC__',
    'STM32F407VE',
    'STM32F4XX',
    'USE_STDPERIPH_DRIVER',
