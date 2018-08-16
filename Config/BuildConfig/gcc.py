@@ -64,7 +64,7 @@ BOOT_CompileTool['CCFLAGS']      = BOOT_DEVICE + ' -ffunction-sections -fdata-se
 
 # BOOT_CompileTool['ASFLAGS']      = ' -c' + BOOT_DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
 
-BOOT_CompileTool['LINKFLAGS']    = BOOT_DEVICE + ' -Wl,--gc-sections,-Map=%s.map -T %s'%(path.BOOT_Out,path.BOOT_LD)
+BOOT_CompileTool['LINKFLAGS']    = BOOT_DEVICE + ' -flto -Wl,--gc-sections,-Map=%s.map -T %s'%(path.BOOT_Out,path.BOOT_LD)
 
 if BUILD == 'debug':
    BOOT_CompileTool['CCFLAGS']   += ' -g -O0'# -gdwarf-2'
@@ -98,7 +98,7 @@ APP_CompileTool['CCFLAGS']      = APP_DEVICE + ' -ffunction-sections -fdata-sect
 
 # APP_CompileTool['ASFLAGS']      = ' -c' + APP_DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
 
-APP_CompileTool['LINKFLAGS']    = APP_DEVICE + ' -Wl,--gc-sections,-Map=%s.map -T %s'%(path.APP_Out,path.APP_LD)
+APP_CompileTool['LINKFLAGS']    = APP_DEVICE + ' -flto -Wl,--gc-sections,-Map=%s.map -T %s '%(path.APP_Out,path.APP_LD)#-Ttext %x 0x08003000
 
 if BUILD == 'debug':
    APP_CompileTool['CCFLAGS']   += ' -g -O0'# -gdwarf-2'

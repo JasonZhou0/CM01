@@ -148,17 +148,17 @@ def GetAllObjectPath(Object):
 		ObjectPath = os.path.join(ObjectPath+' ',str(path))
 	return ObjectPath
 
-# try:
-   # BOOT_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(BOOT_prg[0], BOOT_prg[0])
-   # BOOT_env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
-# except:
-   # pass
+try:
+   BOOT_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(BOOT_prg[0], BOOT_prg[0])
+   BOOT_env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
+except:
+   pass
    
-# try:
-   # APP_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
-   # APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
-# except:
-   # pass
+try:
+   APP_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
+   APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
+except:
+   pass
    
    
 BOOT_POST_ACTION = BOOT_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(BOOT_prg[0], BOOT_env['Out']) \
