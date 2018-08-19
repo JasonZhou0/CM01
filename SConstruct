@@ -68,8 +68,9 @@ if ('=bootloader' in CmdOptions or '=Bootloader' in CmdOptions or '=Boot' in Cmd
    
    prg = env.Program( target = env['Out'], source = Object, )
    
-   POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(prg[0], prg[0])
-   env.AddPostAction(prg, POST_ACTION)
+   if '=ELF' in CmdOptions or '=Elf' in CmdOptions or '=elf' in CmdOptions:
+      POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(prg[0], prg[0])
+      env.AddPostAction(prg, POST_ACTION)
    
    if '=size' in CmdOptions or '=Size' in CmdOptions or '=SIZE' in CmdOptions:
       POST_ACTION = env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(prg[0], env['Out']) + env['SIZE'] + ' %s \n'%prg[0]\
@@ -119,8 +120,9 @@ elif ('=application' in CmdOptions or '=Application' in CmdOptions or '=App' in 
    
    prg = env.Program( target = env['Out'], source = Object, )
    
-   POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(prg[0], prg[0])
-   env.AddPostAction(prg, POST_ACTION)
+   if '=ELF' in CmdOptions or '=Elf' in CmdOptions or '=elf' in CmdOptions:
+      POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(prg[0], prg[0])
+      env.AddPostAction(prg, POST_ACTION)
    
    if '=size' in CmdOptions or '=Size' in CmdOptions or '=SIZE' in CmdOptions:
       POST_ACTION = env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(prg[0], env['Out']) + env['SIZE'] + ' %s \n'%prg[0]\
@@ -135,46 +137,3 @@ elif ('=application' in CmdOptions or '=Application' in CmdOptions or '=App' in 
    
 else:
    print('Build failed! Please let me known what do you want to build, bootloader or application?')
-
-
-
-# BOOT_Object,APP_Object = GetAllObject()
-
-# build everything
-
-# APP_prg = APP_env.Program(
-    # target = APP_env['Out'],
-    # source = APP_Object,
-# )
-
-# def GetAllObjectPath(Object):
-	# ObjectPath = ''
-	# for path in Object:
-		# ObjectPath = os.path.join(ObjectPath+' ',str(path))
-	# return ObjectPath
-
-# try:
-   # BOOT_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(BOOT_prg[0], BOOT_prg[0])
-   # env.AddPostAction(BOOT_prg, BOOT_POST_ACTION)
-# except:
-   # pass
-   
-# try:
-   # APP_POST_ACTION = ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
-   # APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
-# except:
-   # pass
-   
-   
-# POST_ACTION = env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(prg[0], env['Out']) \
-            # + env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(prg[0], env['Out']) \
-            # + env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(prg[0], env['Out']) # + env['SIZE'] + ' %s \n'%prg[0]
-# #            + ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(prg[0], prg[0])
-            
-# env.AddPostAction(prg, POST_ACTION)
-
-# APP_POST_ACTION = APP_env['OBJCOPY'] + ' -g -O binary %s %s.bin\n'%(APP_prg[0], APP_env['Out']) \
-            # + APP_env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(APP_prg[0], APP_env['Out'])\
-            # + APP_env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(APP_prg[0], APP_env['Out']) # + APP_env['SIZE'] + ' %s \n'%APP_prg[0]
-# #            + ' Tools\\ELF\\elfdump.exe %s > %s.txt'%(APP_prg[0], APP_prg[0])
-# APP_env.AddPostAction(APP_prg, APP_POST_ACTION)
