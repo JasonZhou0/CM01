@@ -1,33 +1,25 @@
-Import('BOOT_env')
-Import('APP_env')
+Import('env')
 import os
 
-WorkSpacePath = APP_env['WorkSpace']
-
+WorkSpacePath = env['WorkSpace']
 length = len(WorkSpacePath)
-
 SourcePath = os.getcwd()[length:]
-
-BOOT_TargetBasePath  = WorkSpacePath+BOOT_env['TargetPath']+SourcePath
-APP_TargetBasePath   = WorkSpacePath+APP_env['TargetPath']+SourcePath
+TargetBasePath  = WorkSpacePath+env['TargetPath']+SourcePath
+File = {}
 def CheckFile(BasePath,SourcePath):
    return {BasePath+'\\'+SourcePath[:-2]:SourcePath}
+   
 # ************BOOT_objects************
-BOOT_File = {}
-BOOT_File.update(CheckFile(BOOT_TargetBasePath,'main.c'))
-
+if env['BUILD'] == 'bootloader':
+   File.update(CheckFile(TargetBasePath,'main.c'))
 
 # ************APP_objects************
-APP_File = {}
-APP_File.update(CheckFile(APP_TargetBasePath,'main.c'))
-   
+elif env['BUILD'] == 'application':
+   File.update(CheckFile(TargetBasePath,'main.c'))
    
 # ************OutPut************
-BOOT_objects = []
-for key,value in BOOT_File.items():
-   BOOT_objects += BOOT_env.Object(target = key, source = value)
-APP_objects = []
-for key,value in APP_File.items():
-   APP_objects += APP_env.Object(target = key, source = value)
+objects = []
+for key,value in File.items():
+   objects += env.Object(target = key, source = value)
 
-Return('BOOT_objects','APP_objects')
+Return('objects')

@@ -1,43 +1,87 @@
-Import('BOOT_env')
-Import('APP_env')
+Import('env')
 import os
 
-WorkSpacePath = BOOT_env['WorkSpace']
-
+WorkSpacePath = env['WorkSpace']
 length = len(WorkSpacePath)
-
 SourcePath = os.getcwd()[length:]
-
-BOOT_TargetBasePath  = WorkSpacePath+BOOT_env['TargetPath']+SourcePath
-APP_TargetBasePath   = WorkSpacePath+APP_env['TargetPath']+SourcePath
+TargetBasePath  = WorkSpacePath+env['TargetPath']+SourcePath
+File = {}
 def CheckFile(BasePath,SourcePath):
    return {BasePath+'\\'+SourcePath[:-2]:SourcePath}
+   
 # ************BOOT_objects************
-BOOT_File = {}
-BOOT_File.update(CheckFile(BOOT_TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\gcc_ride7\\startup_stm32f4xx.s'))
-BOOT_File.update(CheckFile(BOOT_TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\system_stm32f4xx.c'))
-BOOT_File.update(CheckFile(BOOT_TargetBasePath,'config\\mcu_family\\mcu_family.c'))
-BOOT_File.update(CheckFile(BOOT_TargetBasePath,'mcu.c'))
-for file_name in Glob('Libraries\\STM32F4xx_StdPeriph_Driver\\src\\*.c'):
-   BOOT_File.update(CheckFile(BOOT_TargetBasePath, '%s'%file_name))
-
+if env['BUILD'] is 'bootloader':
+   File.update(CheckFile(TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\gcc_ride7\\startup_stm32f4xx.s'))
+   File.update(CheckFile(TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\system_stm32f4xx.c'))
+   File.update(CheckFile(TargetBasePath,'config\\mcu_family\\mcu_family.c'))
+   File.update(CheckFile(TargetBasePath,'mcu.c'))
+   for file_name in Glob('Libraries\\STM32F4xx_StdPeriph_Driver\\src\\*.c'):
+      File.update(CheckFile(TargetBasePath, '%s'%file_name))
 
 # ************APP_objects************
-APP_File = {}
-APP_File.update(CheckFile(APP_TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\gcc_ride7\\startup_stm32f4xx.s'))
-APP_File.update(CheckFile(APP_TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\system_stm32f4xx.c'))
-APP_File.update(CheckFile(APP_TargetBasePath,'config\\mcu_family\\mcu_family.c'))
-APP_File.update(CheckFile(APP_TargetBasePath,'mcu.c'))
-for file_name in Glob('Libraries\\STM32F4xx_StdPeriph_Driver\\src\\*.c'):
-   APP_File.update(CheckFile(APP_TargetBasePath, '%s'%file_name))
-
-
+elif env['BUILD'] is 'application':
+   File.update(CheckFile(TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\gcc_ride7\\startup_stm32f4xx.s'))
+   File.update(CheckFile(TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\system_stm32f4xx.c'))
+   File.update(CheckFile(TargetBasePath,'config\\mcu_family\\mcu_family.c'))
+   File.update(CheckFile(TargetBasePath,'mcu.c'))
+   for file_name in Glob('Libraries\\STM32F4xx_StdPeriph_Driver\\src\\*.c'):
+      File.update(CheckFile(TargetBasePath, '%s'%file_name))
+   
 # ************OutPut************
-BOOT_objects = []
-for key,value in BOOT_File.items():
-   BOOT_objects += BOOT_env.Object(target = key, source = value)
-APP_objects = []
-for key,value in APP_File.items():
-   APP_objects += APP_env.Object(target = key, source = value)
+objects = []
+for key,value in File.items():
+   objects += env.Object(target = key, source = value)
 
-Return('BOOT_objects','APP_objects')
+Return('objects')
+
+
+
+
+
+
+
+
+
+# Import('BOOT_env')
+# Import('APP_env')
+# import os
+
+# WorkSpacePath = BOOT_env['WorkSpace']
+
+# length = len(WorkSpacePath)
+
+# SourcePath = os.getcwd()[length:]
+
+# BOOT_TargetBasePath  = WorkSpacePath+BOOT_env['TargetPath']+SourcePath
+# APP_TargetBasePath   = WorkSpacePath+APP_env['TargetPath']+SourcePath
+# def CheckFile(BasePath,SourcePath):
+   # return {BasePath+'\\'+SourcePath[:-2]:SourcePath}
+# # ************BOOT_objects************
+# BOOT_File = {}
+# BOOT_File.update(CheckFile(BOOT_TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\gcc_ride7\\startup_stm32f4xx.s'))
+# BOOT_File.update(CheckFile(BOOT_TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\system_stm32f4xx.c'))
+# BOOT_File.update(CheckFile(BOOT_TargetBasePath,'config\\mcu_family\\mcu_family.c'))
+# BOOT_File.update(CheckFile(BOOT_TargetBasePath,'mcu.c'))
+# for file_name in Glob('Libraries\\STM32F4xx_StdPeriph_Driver\\src\\*.c'):
+   # BOOT_File.update(CheckFile(BOOT_TargetBasePath, '%s'%file_name))
+
+
+# # ************APP_objects************
+# APP_File = {}
+# APP_File.update(CheckFile(APP_TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\gcc_ride7\\startup_stm32f4xx.s'))
+# APP_File.update(CheckFile(APP_TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\system_stm32f4xx.c'))
+# APP_File.update(CheckFile(APP_TargetBasePath,'config\\mcu_family\\mcu_family.c'))
+# APP_File.update(CheckFile(APP_TargetBasePath,'mcu.c'))
+# for file_name in Glob('Libraries\\STM32F4xx_StdPeriph_Driver\\src\\*.c'):
+   # APP_File.update(CheckFile(APP_TargetBasePath, '%s'%file_name))
+
+
+# # ************OutPut************
+# BOOT_objects = []
+# for key,value in BOOT_File.items():
+   # BOOT_objects += BOOT_env.Object(target = key, source = value)
+# APP_objects = []
+# for key,value in APP_File.items():
+   # APP_objects += APP_env.Object(target = key, source = value)
+
+# Return('BOOT_objects','APP_objects')
