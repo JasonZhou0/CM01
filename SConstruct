@@ -61,7 +61,6 @@ if ('=bootloader' in CmdOptions or '=Bootloader' in CmdOptions or '=Boot' in Cmd
    env['CPPPATH']     = Include.BOOT_CPPPATH
 
    # Export Environment
-
    Export('env')
    
    Object = GetAllObject()
@@ -113,7 +112,6 @@ elif ('=application' in CmdOptions or '=Application' in CmdOptions or '=App' in 
    env['CPPPATH']     = Include.APP_CPPPATH
 
    # Export Environment
-
    Export('env')
    
    Object = GetAllObject()
