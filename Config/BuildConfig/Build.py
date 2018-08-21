@@ -14,7 +14,7 @@ MainMenu[0] = {
    'Clean bootloader'   :['call build -c -Q =boot =delete '],
    'Clean application'  :['call build -c -Q =app =delete '],
    'Clean all'          :['call build -c -Q =boot =delete ', 'call build -c -Q =app =delete '],
-   'ELF -> TXT'         :['call build -Q =boot =elf ', 'call build -Q =app =elf ']
+   'ELF->TXT(need tasking licence!)' :['call build -Q =boot =elf ', 'call build -Q =app =elf ']
    }
 
 while(1):
@@ -78,8 +78,7 @@ while(1):
       elif type == 3:
          print('[%d]'%MenuNumMax['%d'%MenuDepth], '%s'%menu_user)
       MenuNumMax['%d'%MenuDepth] += 1
-
-   InputKey = input('Please enter your option number: ')
+   InputKey = input('\nPlease enter your option number: ')
    if(InputKey is 'exit'):
       break
    else:
