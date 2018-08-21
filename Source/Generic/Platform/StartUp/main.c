@@ -25,6 +25,7 @@ int main(void)
       test_value /= 2;
       test_fvalue = 3.2*test_value;
       test_fvalue = 5.2*test_value;
+      //arm_sqrt_f32(0.2, &test_fvalue);
    }
    return test_value;
 }

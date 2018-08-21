@@ -8,7 +8,7 @@
       <VersionLow>1</VersionLow>
      </REG_HEADER>
      <REG_ROOT>
-      <RegVer>1259339776</RegVer>
+      <RegVer>1259470848</RegVer>
       <ColorSyntax>
        <ASMSyntaxFile></ASMSyntaxFile>
       </ColorSyntax>
@@ -16,34 +16,34 @@
       </History>
       <PI.0>
        <Bookmarks_num_>0</Bookmarks_num_>
+       <C>33</C>
+       <L>17</L>
+       <P>..\..\Source\Generic\Platform\StartUp\main.c</P>
+       <VL>12</VL>
+      </PI.0>
+      <PI.1>
+       <Bookmarks_num_>0</Bookmarks_num_>
+       <L>6</L>
+       <P>..\..\Source\Generic\Driver\Mcu\mcu.c</P>
+      </PI.1>
+      <PI.2>
+       <Bookmarks_num_>0</Bookmarks_num_>
        <L>180</L>
        <P>..\..\Source\Generic\Driver\Mcu\Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</P>
        <VL>168</VL>
-      </PI.0>
-      <PI.1>
+      </PI.2>
+      <PI.3>
        <Bookmarks_num_>0</Bookmarks_num_>
        <C>49</C>
        <L>230</L>
        <P>..\..\Source\Generic\Driver\Mcu\Libraries\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c</P>
        <VL>224</VL>
-      </PI.1>
-      <PI.2>
+      </PI.3>
+      <PI.4>
        <Bookmarks_num_>0</Bookmarks_num_>
        <L>59</L>
        <P>..\..\Source\Generic\Driver\Mcu\config\mcu_family\mcu_family.c</P>
        <VL>49</VL>
-      </PI.2>
-      <PI.3>
-       <Bookmarks_num_>0</Bookmarks_num_>
-       <L>6</L>
-       <P>..\..\Source\Generic\Driver\Mcu\mcu.c</P>
-      </PI.3>
-      <PI.4>
-       <Bookmarks_num_>0</Bookmarks_num_>
-       <C>64</C>
-       <L>26</L>
-       <P>..\..\Source\Generic\Platform\StartUp\main.c</P>
-       <VL>12</VL>
       </PI.4>
      </REG_ROOT>
     </EditorOptions>
@@ -56,7 +56,7 @@
       <VersionLow>1</VersionLow>
      </REG_HEADER>
      <REG_ROOT>
-      <RegVer>1259339776</RegVer>
+      <RegVer>1259470848</RegVer>
      </REG_ROOT>
     </LAOptions>
    </LA>
@@ -69,7 +69,9 @@
    </REG_HEADER>
    <REG_ROOT>
     <HServer>HSTMLINK</HServer>
-    <RegVer>1259339776</RegVer>
+    <RegVer>1259470848</RegVer>
+    <Cfg_System>
+    </Cfg_System>
     <Desktop>
      <Workspace_Pane>0</Workspace_Pane>
      <Documents.0>
@@ -78,7 +80,7 @@
        <RelativeFileName>..\..\Source\Generic\Platform\StartUp\main.c</RelativeFileName>
       </ActiveDocument>
       <Editor.0>
-       <FileBarIndex>2</FileBarIndex>
+       <FileBarIndex>1</FileBarIndex>
        <RectPosBottom>333</RectPosBottom>
        <RectPosLeft>52</RectPosLeft>
        <RectPosRight>713</RectPosRight>
@@ -86,7 +88,7 @@
        <RelativeFileName>..\..\Source\Generic\Driver\Mcu\config\mcu_family\mcu_family.c</RelativeFileName>
       </Editor.0>
       <Editor.1>
-       <FileBarIndex>1</FileBarIndex>
+       <FileBarIndex>2</FileBarIndex>
        <RectPosBottom>359</RectPosBottom>
        <RectPosLeft>78</RectPosLeft>
        <RectPosRight>739</RectPosRight>
@@ -223,30 +225,17 @@
        </DockRect.3>
        <DockRect.4>
         <AreHorz>1</AreHorz>
-        <Percent>175</Percent>
-        <strTypeOfWnd>Project</strTypeOfWnd>
-        <Type>10</Type>
-        <TypeOfWnd>9</TypeOfWnd>
-       </DockRect.4>
-       <DockRect.5>
-        <AreHorz>1</AreHorz>
-        <Percent>2</Percent>
-        <Type>6</Type>
-        <TypeOfWnd>-1</TypeOfWnd>
-       </DockRect.5>
-       <DockRect.6>
-        <AreHorz>1</AreHorz>
         <Percent>337</Percent>
         <strTypeOfWnd>Debug</strTypeOfWnd>
         <Type>10</Type>
         <TypeOfWnd>10</TypeOfWnd>
-       </DockRect.6>
-       <DockRect.7>
+       </DockRect.4>
+       <DockRect.5>
         <AreHorz>1</AreHorz>
         <Percent>0</Percent>
         <Type>6</Type>
         <TypeOfWnd>-1</TypeOfWnd>
-       </DockRect.7>
+       </DockRect.5>
       </DockRect.0>
       <DockRect.1>
        <AreHorz>1</AreHorz>
@@ -484,12 +473,15 @@
        <Type>0</Type>
        <TypeOfWnd>6</TypeOfWnd>
        <Data>
+        <AA type="B">AAAAAAAA</AA>
         <Address>0</Address>
         <AddrMode>0</AddrMode>
         <Area>0</Area>
         <Bits>8</Bits>
         <DisplayMode>0</DisplayMode>
+        <HA type="B">PPPPPPPP</HA>
         <High>-1</High>
+        <LA type="B">AAAAAAAA</LA>
         <LimitMAUsPerLine>0</LimitMAUsPerLine>
         <Low>0</Low>
         <RealTime>0</RealTime>
@@ -497,36 +489,46 @@
         <SwapFloat>True</SwapFloat>
         <SwapInt>True</SwapInt>
         <API.0>
+         <AA type="B">AAAAAAAA</AA>
          <Address>0</Address>
          <AddressOffset>0</AddressOffset>
+         <AOA type="B">AAAAAAAA</AOA>
          <DisplayMode>0</DisplayMode>
          <FloatLowFirst>1</FloatLowFirst>
          <IntLowFirst>1</IntLowFirst>
         </API.0>
         <API.1>
+         <AA type="B">AAAAAAAA</AA>
          <Address>0</Address>
          <AddressOffset>0</AddressOffset>
+         <AOA type="B">AAAAAAAA</AOA>
          <DisplayMode>0</DisplayMode>
          <FloatLowFirst>0</FloatLowFirst>
          <IntLowFirst>0</IntLowFirst>
         </API.1>
         <API.2>
+         <AA type="B">AAAAAAAA</AA>
          <Address>0</Address>
          <AddressOffset>0</AddressOffset>
+         <AOA type="B">AAAAAAAA</AOA>
          <DisplayMode>0</DisplayMode>
          <FloatLowFirst>0</FloatLowFirst>
          <IntLowFirst>0</IntLowFirst>
         </API.2>
         <API.3>
+         <AA type="B">AAAAAAAA</AA>
          <Address>0</Address>
          <AddressOffset>0</AddressOffset>
+         <AOA type="B">AAAAAAAA</AOA>
          <DisplayMode>0</DisplayMode>
          <FloatLowFirst>0</FloatLowFirst>
          <IntLowFirst>0</IntLowFirst>
         </API.3>
         <API.4>
+         <AA type="B">AAAAAAAA</AA>
          <Address>0</Address>
          <AddressOffset>0</AddressOffset>
+         <AOA type="B">AAAAAAAA</AOA>
          <DisplayMode>0</DisplayMode>
          <FloatLowFirst>0</FloatLowFirst>
          <IntLowFirst>0</IntLowFirst>
@@ -546,15 +548,25 @@
       <Fetch>
        <Beep>True</Beep>
        <DisplayMessage>True</DisplayMessage>
+       <BP.0>
+        <__>
+         <ActionEnabled>False</ActionEnabled>
+         <ActionScript></ActionScript>
+         <ActionScriptParams></ActionScriptParams>
+         <ActionShow>False</ActionShow>
+         <Active>True</Active>
+         <Condition></Condition>
+         <Condition_Count>0</Condition_Count>
+         <ConditionEnabled>False</ConditionEnabled>
+         <Name>&quot;..\..\Source\Generic\Platform\StartUp\main.c&quot;::17</Name>
+        </__>
+       </BP.0>
       </Fetch>
      </Breakpoints>
      <CASETool>
       <AutoBegin>False</AutoBegin>
      </CASETool>
      <Debug>
-      <Assume>
-       <UnmodifiableCode>0</UnmodifiableCode>
-      </Assume>
       <BackTrace>
        <Reconstruction>1</Reconstruction>
       </BackTrace>
@@ -586,12 +598,14 @@
         <LoadSymbols>1</LoadSymbols>
         <MemoryArea>0</MemoryArea>
         <Offset>0</Offset>
+        <OffsetA type="B">AAAAAAAA</OffsetA>
         <OptimizeTypeByName>0</OptimizeTypeByName>
         <OverrideMemoryArea>0</OverrideMemoryArea>
-        <Path>..\..\Build\Application\bin\APP_TestCode.elf</Path>
+        <Path>..\..\Build\Bootloader\bin\BOOT_TestCode.elf</Path>
         <Process>0</Process>
         <ProjectOutputFile>0</ProjectOutputFile>
         <SOffset>0</SOffset>
+        <SOffsetA type="B">AAAAAAAA</SOffsetA>
         <TargetRelative>False</TargetRelative>
         <TrustLineSymbolsToStartOnInstruction>1</TrustLineSymbolsToStartOnInstruction>
         <Type>28</Type>
@@ -631,12 +645,14 @@
         <LoadSymbols>1</LoadSymbols>
         <MemoryArea>0</MemoryArea>
         <Offset>0</Offset>
+        <OffsetA type="B">AAAAAAAA</OffsetA>
         <OptimizeTypeByName>0</OptimizeTypeByName>
         <OverrideMemoryArea>0</OverrideMemoryArea>
-        <Path>..\..\Build\Bootloader\bin\BOOT_TestCode.elf</Path>
+        <Path>..\..\Build\Application\bin\APP_TestCode.elf</Path>
         <Process>0</Process>
         <ProjectOutputFile>0</ProjectOutputFile>
         <SOffset>0</SOffset>
+        <SOffsetA type="B">AAAAAAAA</SOffsetA>
         <TargetRelative>False</TargetRelative>
         <TrustLineSymbolsToStartOnInstruction>1</TrustLineSymbolsToStartOnInstruction>
         <Type>28</Type>
@@ -674,10 +690,10 @@
        <AfterDL2>0</AfterDL2>
        <AfterDownloadGoto></AfterDownloadGoto>
        <AfterDownloadRunUntil>main</AfterDownloadRunUntil>
-       <bAfterDL1>0</bAfterDL1>
+       <bAfterDL1>1</bAfterDL1>
        <bAfterDL2>0</bAfterDL2>
        <BeforeDownload>1</BeforeDownload>
-       <bRunUntil>0</bRunUntil>
+       <bRunUntil>3</bRunUntil>
        <byAutoDownload>1</byAutoDownload>
        <DisplayLoadMap>True</DisplayLoadMap>
        <DownloadInHotAttach>0</DownloadInHotAttach>
@@ -747,6 +763,7 @@
       </ProcessData>
       <RTOS>
        <OS>0</OS>
+       <Plugin type="B">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Plugin>
       </RTOS>
       <SFR>
        <ExternalFormat>2</ExternalFormat>
@@ -777,7 +794,6 @@
        <AddressDisplay>0</AddressDisplay>
        <ANSI>1</ANSI>
        <BinaryDisplay>0</BinaryDisplay>
-       <BrowserScope>True</BrowserScope>
        <CharArraysAsString>1</CharArraysAsString>
        <CharDisplay>2</CharDisplay>
        <DefaultHex>False</DefaultHex>
@@ -833,9 +849,7 @@
       </WatchExport>
      </Debug>
      <FLASH>
-      <AutoConnect>0</AutoConnect>
       <AutoFLASH>0</AutoFLASH>
-      <AutoSTART>0</AutoSTART>
       <BatchErase>1</BatchErase>
       <BatchLoad>1</BatchLoad>
       <BatchProgram>1</BatchProgram>
@@ -920,7 +934,7 @@
      <History>
      </History>
      <Info>
-      <winIDEA>Build 9.12.256</winIDEA>
+      <winIDEA>Build 9.12.288</winIDEA>
      </Info>
      <Options>
       <CallstackWindow>
@@ -1099,6 +1113,7 @@
        <FindAddressType>1</FindAddressType>
        <FindValueType>0</FindValueType>
        <Format>0</Format>
+       <FSA type="B">ABAAAAAA</FSA>
        <HexList>False</HexList>
        <HexSaveAddress>False</HexSaveAddress>
        <HexSaveSize>True</HexSaveSize>
@@ -1106,6 +1121,7 @@
        <SaveFile></SaveFile>
        <SaveSize>100</SaveSize>
        <SaveSizeType>1</SaveSizeType>
+       <ShowLastValidAccess>0</ShowLastValidAccess>
        <SymbolTips>True</SymbolTips>
       </Memory>
       <OSSwTree>
@@ -1159,7 +1175,7 @@
     <VersionLow>1</VersionLow>
    </REG_HEADER>
    <REG_ROOT>
-    <RegVer>1259339776</RegVer>
+    <RegVer>1259470848</RegVer>
     <Project_Local>
      <Project.0>
       <DefaultTargetName>CM01 - Debug</DefaultTargetName>
@@ -1174,7 +1190,7 @@
     <VersionLow>1</VersionLow>
    </REG_HEADER>
    <REG_ROOT>
-    <RegVer>1259339776</RegVer>
+    <RegVer>1259470848</RegVer>
     <Data>
      <CPU>
       <Connection_._protocol>1</Connection_._protocol>

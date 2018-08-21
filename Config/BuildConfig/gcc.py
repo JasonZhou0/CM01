@@ -58,7 +58,7 @@ BOOT_CompileTool = {
    'OBJCOPY':CompileToolBacePath+'arm-none-eabi-objcopy',
    'PROGSUFFIX':'.elf',
 }
-BOOT_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsigned-char -std=gnu11 -fmessage-length=0'
+BOOT_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fsigned-char -std=gnu11 -fmessage-length=0'
 
 BOOT_CompileTool['CCFLAGS']      = BOOT_DEVICE + ' -ffunction-sections -fdata-sections -Wfatal-errors -Wall -Wextra' # -DSTM32F407ZG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
 
@@ -92,7 +92,7 @@ APP_CompileTool = {
    'OBJCOPY':CompileToolBacePath+'arm-none-eabi-objcopy',
    'PROGSUFFIX':'.elf',
 }
-APP_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsigned-char -std=gnu11 -fmessage-length=0'
+APP_DEVICE = '  -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fsigned-char -std=gnu11 -fmessage-length=0'
 
 APP_CompileTool['CCFLAGS']      = APP_DEVICE + ' -ffunction-sections -fdata-sections -Wfatal-errors -Wall -Wextra' # -DSTM32F407ZG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -D__FPU_USED'
 
