@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 type = sys.version_info.major
 
@@ -21,10 +22,49 @@ while(1):
    print('##########################################################')
    print('##                                                      ##')
    print('##                                                      ##')
-   print('##               *   Start Construct   *                ##')
+   print('##',end='',flush=True)
+   Data = '>>> Easy Construct <<<'
+   Start = 0
+   End   = 15
+   fill  = ' '
+   while(1):
+      delay = 0.01
+      DataLen = len(Data)
+      Offset= Start
+      print('%s%s'%(fill,Data),end='',flush=True)
+      if(End<Start):
+         break
+      while(DataLen):
+         print('\b',end='',flush=True)
+         DataLen-=1
+      time.sleep(delay)
+      Start+=1
+   print('               ##')
    print('##                                                      ##')
-   print('##                                                      ##')
-   print('##########################################################')
+   print('##',end='',flush=True)
+   Data = '--- Jason Zhou '
+   Start = 80
+   End   = 38
+   fill  = ''
+   DataLen = len(Data)
+   while(Start):
+      print(' ',end='',flush=True)
+      Start-=1
+   Start = 80
+   while(1):
+      delay = 0.01
+      DataLen = len(Data)
+      Offset= Start
+      print('%s%s'%(fill,Data),end='',flush=True)
+      if(Start<End):
+         break
+      while(DataLen+1):
+         print('\b',end='',flush=True)
+         DataLen-=1
+      time.sleep(delay)
+      Start-=1
+   print('  ##')
+   print('##########################################################\n')
    MenuDepth  = 0
    MenuNumMax = {
       '0':0,
