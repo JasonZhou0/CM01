@@ -1,20 +1,18 @@
 Import('env')
 import os
 
-WorkSpacePath = env['WorkSpace']
-length = len(WorkSpacePath)
-SourcePath = os.getcwd()[length:]
-TargetBasePath  = WorkSpacePath+env['TargetPath']+SourcePath
+SourcePath = os.getcwd()[len(env['WorkSpace']):]+'\\'
+TargetBasePath  = env['ObjPath']+SourcePath
 File = {}
 def CheckFile(BasePath,SourcePath):
-   return {BasePath+'\\'+SourcePath[:-2]:SourcePath}
+   return {BasePath+SourcePath[:-2]:SourcePath}
    
 # ************BOOT_objects************
-if env['BUILD'] == 'bootloader':
+if env['TargetName'] == 'bootloader':
    File.update(CheckFile(TargetBasePath,'main.c'))
 
 # ************APP_objects************
-elif env['BUILD'] == 'application':
+elif env['TargetName'] == 'application':
    File.update(CheckFile(TargetBasePath,'main.c'))
    
 # ************OutPut************

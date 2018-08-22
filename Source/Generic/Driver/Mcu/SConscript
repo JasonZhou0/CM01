@@ -1,16 +1,14 @@
 Import('env')
 import os
 
-WorkSpacePath = env['WorkSpace']
-length = len(WorkSpacePath)
-SourcePath = os.getcwd()[length:]
-TargetBasePath  = WorkSpacePath+env['TargetPath']+SourcePath
+SourcePath = os.getcwd()[len(env['WorkSpace']):]+'\\'
+TargetBasePath  = env['ObjPath']+SourcePath
 File = {}
 def CheckFile(BasePath,SourcePath):
-   return {BasePath+'\\'+SourcePath[:-2]:SourcePath}
+   return {BasePath+SourcePath[:-2]:SourcePath}
    
 # ************BOOT_objects************
-if env['BUILD'] is 'bootloader':
+if env['TargetName'] == 'bootloader':
    File.update(CheckFile(TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\gcc_ride7\\startup_stm32f4xx.s'))
    File.update(CheckFile(TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\system_stm32f4xx.c'))
    File.update(CheckFile(TargetBasePath,'config\\mcu_family\\mcu_family.c'))
@@ -19,7 +17,7 @@ if env['BUILD'] is 'bootloader':
       File.update(CheckFile(TargetBasePath, '%s'%file_name))
 
 # ************APP_objects************
-elif env['BUILD'] is 'application':
+elif env['TargetName'] == 'application':
    File.update(CheckFile(TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\gcc_ride7\\startup_stm32f4xx.s'))
    File.update(CheckFile(TargetBasePath,'Libraries\\CMSIS\\Device\\ST\\STM32F4xx\\Source\\Templates\\system_stm32f4xx.c'))
    File.update(CheckFile(TargetBasePath,'config\\mcu_family\\mcu_family.c'))

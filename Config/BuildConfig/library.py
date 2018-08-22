@@ -1,16 +1,23 @@
+try:
+   import Config.BuildConfig.path as Path
+except:
+   try:
+      import path as Path
+   except:
+      print('Cannot found "path" module, please check it!')
+      exit(main())
 # lib file paths
-BOOT_LIBPATH = [
-   # 'Tools\\gcc-arm-none-eabi\\arm-none-eabi\\lib\\',
-   # 'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1',
-   # 'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv6-m',
-   # 'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7e-m',
-   'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv7-m',
-   # 'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.base',
-   # 'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main',
-   # 'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\armv8-m.main\\fpu\\fpv4-sp-d16',
-   'Tools\\gcc-arm-none-eabi\\lib\\gcc\\arm-none-eabi\\5.4.1\\fpu',
-   ]
-APP_LIBPATH = BOOT_LIBPATH
+Library     = {}
+LibraryPath = {}
 
-BOOT_LIB = []
-APP_LIB  = BOOT_LIB
+Library['bootloader'] = [
+   ]
+LibraryPath['bootloader'] = [
+   Path.Path['bootloader']['WorkSpace']+'Tools\\gcc-arm-none-eabi\\',
+   ]
+
+Library['application'] = [
+   ]
+LibraryPath['application'] = [
+   Path.Path['bootloader']['WorkSpace']+'Tools\\gcc-arm-none-eabi\\',
+   ]
