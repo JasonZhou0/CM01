@@ -74,9 +74,9 @@ while(1):
    for menu_user in MainMenu[MenuDepth].keys():
       CallMenu[MenuNumMax['%d'%MenuDepth]] = MainMenu[MenuDepth][menu_user]
       if type == 2:
-         print [MenuNumMax['%d'%MenuDepth]], menu_user
+         print  [MenuNumMax['%d'%MenuDepth]], menu_user
       elif type == 3:
-         print('[%d]'%MenuNumMax['%d'%MenuDepth], '%s'%menu_user)
+         print(' [%d].'%MenuNumMax['%d'%MenuDepth], '%s'%menu_user)
       MenuNumMax['%d'%MenuDepth] += 1
    InputKey = input('\nPlease enter your option number: ')
    if(InputKey is 'exit'):

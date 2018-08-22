@@ -12,6 +12,7 @@ import Config.BuildConfig.path   	as Path
 
 base_env  = Environment(ENV = os.environ)
    
+<<<<<<< HEAD
 class ConstructTarget(object):
    def __init__(self,name,env,arg):
       self.name = name
@@ -120,6 +121,40 @@ Project.OutPut()
                # if O not in AllObject:
                   # AllObject+=O
    # return AllObject
+=======
+# build all
+if ('=bootloader' in CmdOptions or '=Bootloader' in CmdOptions or '=Boot' in CmdOptions or '=BOOT' in CmdOptions or '=boot' in CmdOptions):
+   if '=delete' in CmdOptions or '=Delete' in CmdOptions:
+      print('Start delete \'Build\\Bootloader\' floder...')
+      import shutil
+      # delete folder "Build\\Bootloader" and all files
+      if os.path.exists('Build\\Bootloader'):
+         shutil.rmtree('Build\\Bootloader')
+      print('Complete delete \'Build\\Bootloader\' floder.')
+   print('Start build bootloader...')
+   env['BUILD']  = "bootloader"
+   # Compiler
+   for name in Compiler.BOOT_CompileTool.keys():
+      env['%s'%name] = Compiler.BOOT_CompileTool['%s'%name]
+
+   # work space path
+   env['WorkSpace']   = path.WorkSpace
+
+   # project defines
+   env['CPPDEFINES']  = Define.BOOT_CPPDEFINES
+
+   # lib file paths
+   env['LIBPATH']     = Lib.BOOT_LIBPATH
+
+   # lib files
+   env['LIB']         = Lib.BOOT_LIB
+
+   # include file paths
+   env['CPPPATH']     = Include.BOOT_CPPPATH
+
+   # Export Environment
+   Export('env')
+>>>>>>> ef53921522b7ccaef5c7c48620f2060d83224a82
    
 # # build all
 # if ('=bootloader' in CmdOptions or '=Bootloader' in CmdOptions or '=Boot' in CmdOptions or '=BOOT' in CmdOptions or '=boot' in CmdOptions):
@@ -172,7 +207,41 @@ Project.OutPut()
                   # + env['OBJCOPY'] + ' -g -O ihex %s %s.hex\n'%(prg[0], env['Out'])   \
                   # + env['OBJCOPY'] + ' -g -O srec %s %s.srec\n'%(prg[0], env['Out'])
    
+<<<<<<< HEAD
    # env.AddPostAction(prg, POST_ACTION)
+=======
+elif ('=application' in CmdOptions or '=Application' in CmdOptions or '=App' in CmdOptions or '=APP' in CmdOptions or '=app' in CmdOptions):
+   if '=delete' in CmdOptions or '=Delete' in CmdOptions:
+      print('Start delete \'Build\\Application\' floder...')
+      import shutil
+      # delete folder "Build\\Application" and all files
+      if os.path.exists('Build\\Application'):
+         shutil.rmtree('Build\\Application')
+      print('Complete delete \'Build\\Application\' floder.')
+   print('Start build application...')
+   env['BUILD']  = "application"
+   # Compiler
+   for name in Compiler.APP_CompileTool.keys():
+      env['%s'%name] = Compiler.APP_CompileTool['%s'%name]
+
+   # work space path
+   env['WorkSpace']   = path.WorkSpace
+
+   # project defines
+   env['CPPDEFINES']  = Define.APP_CPPDEFINES
+
+   # lib file paths
+   env['LIBPATH']     = Lib.APP_LIBPATH
+
+   # lib files
+   env['LIB']         = Lib.APP_LIB
+
+   # include file paths
+   env['CPPPATH']     = Include.APP_CPPPATH
+
+   # Export Environment
+   Export('env')
+>>>>>>> ef53921522b7ccaef5c7c48620f2060d83224a82
    
 # elif ('=application' in CmdOptions or '=Application' in CmdOptions or '=App' in CmdOptions or '=APP' in CmdOptions or '=app' in CmdOptions):
    # if '=delete' in CmdOptions or '=Delete' in CmdOptions:
