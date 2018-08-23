@@ -97,13 +97,19 @@ while(1):
          print(' [%d].'%MenuNumMax['%d'%MenuDepth], '%s'%menu_user)
       MenuNumMax['%d'%MenuDepth] += 1
    InputKey = input('\nPlease enter your option number: ')
-   if(InputKey is 'exit'):
-      break
-   else:
+   try:
       InputKey = int(InputKey)
-
-   if InputKey < MenuNumMax['%d'%MenuDepth]:
-      for cmd in CallMenu[InputKey]:
-         os.system(cmd)
+   except:
+      if (InputKey == 'exit'):
+         break
+      print('Error: Please enter a pure number or "exit" to close this window!')
+      # os.system('pause')
+      continue
    else:
-      print('Your input number put of range!')
+      if InputKey < MenuNumMax['%d'%MenuDepth]:
+         print('You are really smart! The world is wonderful because of you!')
+         for cmd in CallMenu[InputKey]:
+            os.system(cmd)
+      else:
+         print('Error: Your input number put of range!')
+      # os.system('pause')
