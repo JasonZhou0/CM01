@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import getpass
 
 type = sys.version_info.major
 
@@ -21,11 +22,28 @@ while(1):
    print('')
    print('##########################################################')
    print('##                                                      ##')
-   print('##                                                      ##')
+   UserName       = 'Hello ['+getpass.getuser()+']'
+   LineLen        = len('                                                      ')
+   UserNameLen    = len(UserName)
+   SpaceLen       = LineLen-UserNameLen
+   LeftSpaceLen   = SpaceLen/2
+   RightSpaceLen  = SpaceLen - LeftSpaceLen
+   if(LeftSpaceLen < 0 or RightSpaceLen < 0):
+      print("##                Your name is too long!                ##")
+   else:
+      LeftFill       = ''
+      RightFill      = ''
+      while(LeftSpaceLen):
+         LeftFill += ' '
+         LeftSpaceLen-=1
+      while(RightSpaceLen):
+         RightFill += ' '
+         RightSpaceLen-=1
+      print ('##'+LeftFill+UserName+RightFill+'##')
    print('##',end='',flush=True)
-   Data = '>>> Easy Construct <<<'
+   Data = '>>> Welcome to Easy Construct! <<<'
    Start = 0
-   End   = 15
+   End   = 8
    fill  = ' '
    while(1):
       delay = 0.01
@@ -39,7 +57,7 @@ while(1):
          DataLen-=1
       time.sleep(delay)
       Start+=1
-   print('               ##')
+   print('          ##')
    print('##                                                      ##')
    print('##',end='',flush=True)
    Data = '--- Jason Zhou '
