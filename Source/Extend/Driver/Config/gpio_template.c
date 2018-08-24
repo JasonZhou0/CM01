@@ -1,0 +1,1 @@
+void gpio_%s
