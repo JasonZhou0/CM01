@@ -1,10 +1,6 @@
 import os
 import sys
-import Config.BuildConfig.compiler  as Compiler
-import Config.BuildConfig.include   as Include
-import Config.BuildConfig.define    as Define
-import Config.BuildConfig.library   as Lib
-import Config.BuildConfig.path   	as Path
+
 # import shutil
 # # delete folder "Build" and all files
 # if os.path.exists('Build'):
@@ -18,6 +14,11 @@ class ConstructTarget(object):
       self.env  = env
       self.arg  = arg
    def GetConfig(self):
+      import Config.BuildConfig.compiler  as Compiler
+      import Config.BuildConfig.include   as Include
+      import Config.BuildConfig.define    as Define
+      import Config.BuildConfig.library   as Lib
+      import Config.BuildConfig.path   	as Path
       env = self.env
       env['CCCOMSTR']   = "Compiling $TARGET"
       env['LINKCOMSTR'] = "Linking $TARGET"
@@ -46,7 +47,9 @@ class ConstructTarget(object):
       print('Start build %s...'%env['TargetName'])
 
       Export('env')
-      
+   def CallAutomaticScript(self):
+      import Config.BuildConfig.automatic as Automatic
+      Automatic.AutomaticScript(self.name)
    def PrintAll(self):
       for item in self.env.Dictionary().items():
          print(item)
@@ -63,9 +66,9 @@ class ConstructTarget(object):
                SConscript_path_file = os.path.join(dirpath,"SConscript")
                if SConscript_path_file not in AllSConscript:
                   AllSConscript.append(SConscript_path_file)
-                  O = SConscript([SConscript_path_file])
-                  if O not in self.object:
-                     self.object+=O
+                  object = SConscript([SConscript_path_file])
+                  if object not in self.object:
+                     self.object += object
    def Program(self):
       self.prg = self.env.Program( target = self.env['Target'], source = self.object, )
    def OutPut(self):
@@ -84,11 +87,14 @@ class ConstructTarget(object):
       
       self.env.AddPostAction(self.prg, POST_ACTION)
 
+
+
 if ('=bootloader' in sys.argv or '=Bootloader' in sys.argv or '=Boot' in sys.argv or '=BOOT' in sys.argv or '=boot' in sys.argv):
    Project = ConstructTarget('bootloader', base_env, sys.argv)
 elif ('=application' in sys.argv or '=Application' in sys.argv or '=App' in sys.argv or '=APP' in sys.argv or '=app' in sys.argv):
    Project = ConstructTarget('application', base_env, sys.argv)
 Project.GetConfig()
+Project.CallAutomaticScript()
 Project.GetObject()
 Project.Program()
 Project.OutPut()

@@ -5,8 +5,7 @@ except:
       import path as Path
    except:
       print('Cannot found "path" module, please check it!')
-      exit(main())
-
+      exit()
 Include  = {}
 # Include path
 Include['bootloader'] = [
