@@ -110,55 +110,105 @@ def GreatSourceFile(path,records,excel,encoding):
 
    process     = 'normal' # normal/script
    dict        = {}
+   dict_count  = 0
    CodeBlock   = ''
+   
+   def GetFill(count):
+      fill = ''
+      stair = count
+      if stair > 0:
+         stair = stair*3
+         while(stair > 0):
+            fill = '%s '%fill
+            stair-=1
+      return fill
+   def HandleLineTemplate(line, excel):
+      writeLine    = line
+      replaceLists = re.findall(r"\$\{(.+?)\}",writeLine)
+      if(len(replaceLists) > 0):
+         for parameterList in replaceLists:
+            temp = string.Template(writeLine)
+            run  = "temp.safe_substitute(%s='%s')"%(parameterList, excel.ExcelDict[GetNowSheetName()][parameterList][GetNowSubscript()])
+            writeLine = eval(run)
+      return writeLine
    for line in records:
+#      writeLine    = line
+#      replaceLists = re.findall(r"\$\{(.+?)\}",writeLine)
+#      if(len(replaceLists) > 0):
+#         for parameterList in replaceLists:
+#            temp = string.Template(writeLine)
+#            run  = "temp.safe_substitute(%s='%s')"%(parameterList, excel.ExcelDict[GetNowSheetName()][parameterList][GetNowSubscript()])
+#            writeLine = eval(run)
+      writeLine = HandleLineTemplate(line, excel)
       if process == 'normal':
-         if '% ' == line[:2]:# when line start is '% ', it is mean: this is a script.
-            if ' if ' in line[:5]:
-               dict[dict_count] = 'if'
-               CodeBlock = line[2:]
-            elif ' for ' in line[:6]:
-               dict[dict_count] = 'for'
-               CodeBlock = line[2:]
-            elif ' while ' in line[:8]:
-               dict[dict_count] = 'while'
-               CodeBlock = line[2:]
+         #writeLine = HandleLineTemplate(line, excel)
+         if '% ' == writeLine[:2]:# when writeLine start is '% ', it is mean: this is a script.
+            if ' if ' in writeLine[:5]:
+               dict[dict_count]  = 'if'
+               dict_count+=1
+               CodeBlock         = writeLine[2:]
+               process           = 'script'
+            elif ' for ' in writeLine[:6]:
+               dict[dict_count]  = 'for'
+               dict_count+=1
+               CodeBlock         = writeLine[2:]
+               process           = 'script'
+            elif ' while ' in writeLine[:8]:
+               dict[dict_count]  = 'while'
+               dict_count+=1
+               CodeBlock         = writeLine[2:]
+               process           = 'script'
             else:
-               writeLine    = line
-               replaceLists = re.findall(r"\$\{(.+?)\}",writeLine)
-               if(len(replaceLists) > 0):
-                  for list in replaceLists:
-                     temp = string.Template(writeLine)
-                     run  = "temp.safe_substitute(%s='%s')"%(list, excel.ExcelDict[GetNowSheetName()][list][GetNowSubscript()])
-                     writeLine = eval(run)
-               exec(writeLine[2:-1])
+               exec(writeLine[2:])
          else:
-            writeLine    = line
-            replaceLists = re.findall(r"\$\{(.+?)\}",writeLine)
-            if(len(replaceLists) > 0):
-               for list in replaceLists:
-                  temp = string.Template(writeLine)
-                  run  = "temp.safe_substitute(%s='%s')"%(list, excel.ExcelDict[GetNowSheetName()][list][GetNowSubscript()])
-                  writeLine = eval(run)
             file.writelines(writeLine)
       elif process == 'script':
-
+         if '% ' == writeLine[:2]:# when writeLine start is '% ', it is mean: this is a script.
+            if ' if ' in writeLine[:5]:
+               dict[dict_count]  = 'if'
+               dict_count+=1
+               CodeBlock         = '%s%s'%(CodeBlock, writeLine[2:])
+            elif ' for ' in writeLine[:6]:
+               dict[dict_count]  = 'for'
+               dict_count+=1
+               CodeBlock         = '%s%s'%(CodeBlock, writeLine[2:])
+            elif ' while ' in writeLine[:8]:
+               dict[dict_count]  = 'while'
+               dict_count+=1
+               CodeBlock         = '%s%s'%(CodeBlock, writeLine[2:])
+            else:
+               CodeBlock         = '%s%s'%(CodeBlock, writeLine[2:])
+         elif '%end of ' in writeLine:
+            str = '%%end of %s'%dict[dict_count-1]
+            if str == writeLine[:-1]:
+               dict_count-=1
+               if dict_count == 0:
+                  exec(CodeBlock)
+                  process = 'normal'
+            else:
+               CodeBlock   = '%s%sfile.writelines(HandleLineTemplate(\'%s\', excel)+\'\\n\')\n'%(CodeBlock, GetFill(dict_count), line[:-1])
+         else:
+            CodeBlock   = '%s%sfile.writelines(HandleLineTemplate(\'%s\', excel)+\'\\n\')\n'%(CodeBlock, GetFill(dict_count), line[:-1])
          pass
       else:
          print('process\'s value is fault')
+   if dict_count != 0:
+      file.close()
+      print('Error: Template syntax error')
+      exit(1)
    file.close()
 
 def AutomaticCode():
    import os
    import sys
-   print('Start: automatic programming code for [gpio]')
+   print('Start: Automatic programming code for [gpio]')
    sys.path.append(r'%s\\Source\\Extend\\Driver\\gpio\\Template\\'%os.getcwd()) # add config file path to system path
    import gpio_config
    TemplateFile = []
    Project_gpio_config = GetExcelConfig(gpio_config.Config['config'])
    LoadTemplate(gpio_config.Config['template'],TemplateFile,'utf-8')
    GreatSourceFile(gpio_config.Config['target'],TemplateFile,Project_gpio_config,'utf-8')
-   print('Completed: automatic programming code for [gpio]')
+   print('Completed: Automatic programming code for [gpio]')
    
 if __name__ == '__main__':
    AutomaticCode()
