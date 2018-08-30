@@ -1,10 +1,7 @@
 import os
 import sys
 
-# import shutil
-# # delete folder "Build" and all files
-# if os.path.exists('Build'):
-	# shutil.rmtree('Build')
+# sys.path.append(r'%s\\Config\\BuildConfig\\'%os.getcwd()) # add config file path to system path
 
 base_env  = Environment(ENV = os.environ)
    
@@ -49,7 +46,7 @@ class ConstructTarget(object):
       Export('env')
    def CallAutomaticScript(self):
       import Config.BuildConfig.automatic as Automatic
-      Automatic.AutomaticScript(self.name)
+      Automatic.AutomaticCode()
    def PrintAll(self):
       for item in self.env.Dictionary().items():
          print(item)
@@ -94,7 +91,7 @@ if ('=bootloader' in sys.argv or '=Bootloader' in sys.argv or '=Boot' in sys.arg
 elif ('=application' in sys.argv or '=Application' in sys.argv or '=App' in sys.argv or '=APP' in sys.argv or '=app' in sys.argv):
    Project = ConstructTarget('application', base_env, sys.argv)
 Project.GetConfig()
-Project.CallAutomaticScript()
+# Project.CallAutomaticScript()
 Project.GetObject()
 Project.Program()
 Project.OutPut()

@@ -1,5 +1,5 @@
-% i=0
-void gpio_${GPIOx}${PINx}Init(void)
+// % from automatic import SetNowSheetName
+// % from automatic import SetNowSubscript
 /*!
  * \addtogroup DTC DTC Handler
  * \{
@@ -43,9 +43,11 @@ void gpio_${GPIOx}${PINx}Init(void)
 /* PRQA S 3120 -- */
 
 % i=0
-// % while (i<10):
-% i+=1
-void gpio_${GPIOx}${PINx}Init(void)
+% i-=1
+% SetNowSheetName('function')
+% SetNowSubscript(0)
+// % while (i):
+void gpio_${GPIOx}_${PINx}Init(void)
 {
    
    

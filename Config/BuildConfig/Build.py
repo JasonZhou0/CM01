@@ -15,7 +15,8 @@ MainMenu[0] = {
    'Clean bootloader'   :['call build -c -Q =boot =delete '],
    'Clean application'  :['call build -c -Q =app =delete '],
    'Clean all'          :['call build -c -Q =boot =delete ', 'call build -c -Q =app =delete '],
-   'ELF->TXT(need tasking licence!)' :['call build -Q =boot =elf ', 'call build -Q =app =elf ']
+   'ELF->TXT(need tasking licence!)' :['call build -Q =boot =elf ', 'call build -Q =app =elf '],
+   'Start automatic code' :['call Tools\\Python\\Python37-32\\python.exe Config\\BuildConfig\\automatic.py'],
    }
 
 while(1):
