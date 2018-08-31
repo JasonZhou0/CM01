@@ -45,7 +45,7 @@ const gpio_initializationFuctionStructType initializationFuctionStruct[]=
    /*            OpFunc,             IN_OUT, PULL_DROP, SET_RESET    */
 % SetNowSheetName('function')
 % SetNowSubscript(0)
-% for i in range(len(excel.ExcelDict[GetNowSheetName()]['GPIOx'])):
+% for i in range(len(excel.ExcelDict['function']['GPIOx'])):
 %    SetNowSubscript(i)
    {(void*)gpio_${GPIOx}_${PINx}Init,\t${IN_OUT},\t${PULL_DROP},\t${SET_RESET}},
 %end of for
@@ -55,7 +55,7 @@ const gpio_initializationFuctionStructType initializationFuctionStruct[]=
 /* **** Function Definitions **** */
 % SetNowSheetName('function')
 % SetNowSubscript(0)
-% for i in range(len(excel.ExcelDict[GetNowSheetName()]['GPIOx'])):
+% for i in range(len(excel.ExcelDict['function']['GPIOx'])):
 %    SetNowSubscript(i)
 /**********************************************************************************************************************
  *

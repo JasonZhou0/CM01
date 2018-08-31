@@ -2,14 +2,14 @@
 # str = '{0:*>9}'
 # str = str.format('ADWA')
 # print(str)
-
+import os
+import sys
 import re
 import xlrd
 import string
 
 NowSheetName = ''
 NowSubscript = 0
-
 
 def SetNowSubscript(Subscript):
    global NowSubscript
@@ -132,13 +132,6 @@ def GreatSourceFile(path,records,excel,encoding):
             writeLine = eval(run)
       return writeLine
    for line in records:
-#      writeLine    = line
-#      replaceLists = re.findall(r"\$\{(.+?)\}",writeLine)
-#      if(len(replaceLists) > 0):
-#         for parameterList in replaceLists:
-#            temp = string.Template(writeLine)
-#            run  = "temp.safe_substitute(%s='%s')"%(parameterList, excel.ExcelDict[GetNowSheetName()][parameterList][GetNowSubscript()])
-#            writeLine = eval(run)
       writeLine = HandleLineTemplate(line, excel)
       if process == 'normal':
          #writeLine = HandleLineTemplate(line, excel)
@@ -198,17 +191,17 @@ def GreatSourceFile(path,records,excel,encoding):
       exit(1)
    file.close()
 
-def AutomaticCode():
-   import os
-   import sys
-   print('Start: Automatic programming code for [gpio]')
-   sys.path.append(r'%s\\Source\\Extend\\Driver\\gpio\\Template\\'%os.getcwd()) # add config file path to system path
-   import gpio_config
+def AutomaticCode(pyconfig, moduleName):
+   print('Start: Automatic programming code for [%s]'%moduleName)
+   exec('import %s'%pyconfig)
    TemplateFile = []
-   Project_gpio_config = GetExcelConfig(gpio_config.Config['config'])
-   LoadTemplate(gpio_config.Config['template'],TemplateFile,'utf-8')
-   GreatSourceFile(gpio_config.Config['target'],TemplateFile,Project_gpio_config,'utf-8')
-   print('Completed: Automatic programming code for [gpio]')
-   
+   Project_gpio_config = GetExcelConfig(eval("%s.Config['config']"%pyconfig))
+   LoadTemplate(eval("%s.Config['template']"%pyconfig), TemplateFile,'utf-8')
+   GreatSourceFile(eval("%s.Config['target']"%pyconfig), TemplateFile,Project_gpio_config,'utf-8')
+   print('Completed: Automatic programming code for [%s]'%moduleName)
+
 if __name__ == '__main__':
-   AutomaticCode()
+   # gpio
+   sys.path.append(r'%s\\Source\\Extend\\Driver\\gpio\\Template\\'%os.getcwd()) # add config file path to system path
+   AutomaticCode('gpio_config', 'gpio')
+   # end of gpio
