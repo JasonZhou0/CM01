@@ -19,13 +19,21 @@ MainMenu[0] = {
    'Start automatic code' :['call Tools\\Python\\Python37-32\\python.exe Config\\BuildConfig\\automatic.py'],
    }
 
+def str_len(str): 
+   try: 
+      row_l=len(str) 
+      utf8_l=len(str.encode('utf-8')) 
+      return (utf8_l-row_l)/2+row_l
+   except:
+      return 0
+
 while(1):
    print('')
    print('##########################################################')
    print('##                                                      ##')
    UserName       = 'Hello ['+getpass.getuser()+']'
-   LineLen        = len('                                                      ')
-   UserNameLen    = len(UserName)
+   LineLen        = str_len('                                                      ')
+   UserNameLen    = str_len(UserName)
    SpaceLen       = LineLen-UserNameLen
    LeftSpaceLen   = SpaceLen/2
    RightSpaceLen  = SpaceLen - LeftSpaceLen
@@ -48,7 +56,7 @@ while(1):
    fill  = ' '
    while(1):
       delay = 0.01
-      DataLen = len(Data)
+      DataLen = str_len(Data)
       Offset= Start
       print('%s%s'%(fill,Data),end='',flush=True)
       if(End<Start):
@@ -65,14 +73,14 @@ while(1):
    Start = 80
    End   = 38
    fill  = ''
-   DataLen = len(Data)
+   DataLen = str_len(Data)
    while(Start):
       print(' ',end='',flush=True)
       Start-=1
    Start = 80
    while(1):
       delay = 0.01
-      DataLen = len(Data)
+      DataLen = str_len(Data)
       Offset= Start
       print('%s%s'%(fill,Data),end='',flush=True)
       if(Start<End):
